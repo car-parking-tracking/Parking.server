@@ -1,3 +1,38 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
-# Create your models here.
+
+class ParkingLot(models.Model):
+    """
+    Базовая модель для парковки, включает в себя координаты
+    в формате x, y пример - 25.122923, 55.189352
+    """
+    address = models.CharField(
+        verbose_name='Адрес парковки',
+        max_length=150,
+        blank=False,
+        Unique=True
+    )
+    coordinates = models.CharField(
+        verbose_name='Координаты парковки',
+        max_length=40,
+        blank=False,
+        unique=True,
+    )
+    car_capacity = models.IntegerField(
+        verbose_name='Общее количество парковочных мест',
+        max_length=4,
+        blank=False,
+        unique=False,
+        validators=[MinValueValidator(
+            limit_value=1,
+            message='Количество парковочных мест не может быть меньше одного'
+        )]
+    )
+
+    class Meta:
+        verbose_name = 'Парковка'
+        verbose_name_plural = 'Парковки'
+
+    def __str__(self):
+        return self.address
