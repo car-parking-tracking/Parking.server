@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     """
     Кастомная модель пользователя.
     """
+    username = None
     email = models.EmailField(
         verbose_name=_('адрес электронной почты'),
         unique=True
