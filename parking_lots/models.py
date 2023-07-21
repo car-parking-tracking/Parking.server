@@ -11,7 +11,6 @@ class ParkingLot(models.Model):
         verbose_name='Адрес парковки',
         max_length=150,
         blank=False,
-        Unique=True
     )
     coordinates = models.CharField(
         verbose_name='Координаты парковки',
@@ -21,13 +20,18 @@ class ParkingLot(models.Model):
     )
     car_capacity = models.IntegerField(
         verbose_name='Общее количество парковочных мест',
-        max_length=4,
         blank=False,
         unique=False,
         validators=[MinValueValidator(
             limit_value=1,
             message='Количество парковочных мест не может быть меньше одного'
         )]
+    )
+    object_type = models.CharField(
+        verbose_name='Тип парковки для отрисовки',
+        max_length=20,
+        blank=False,
+        unique=False,
     )
 
     class Meta:
