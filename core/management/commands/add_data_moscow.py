@@ -10,7 +10,7 @@ class Command(BaseCommand):
     Данный скрипт наполняет нашу базу данных данными из json файла
     московской парковки.
     Файл находится в /core/data/
-    Запускается командой python manage.py add_data
+    Запускается командой python manage.py add_data_moscow
 
     Пример json объекта:
     {
