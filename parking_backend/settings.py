@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'parking_lots.apps.ParkingLotsConfig',
+    'core.apps.CoreConfig',
     'users',
 ]
 
