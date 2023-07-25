@@ -3,7 +3,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 # Custom user model:
@@ -25,6 +24,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# DJOSER SETTINGS
+DJOSER = {
+    "LOGIN FIELD": "email",
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    'SERIALIZERS': {
+        'token_create': 'api.serializers.CustomTokenCreateSerializer',
+    },
+}
+
+# EMAIL BACKEND
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_NAME = 'Parkonaut'
 
 # Application definition
 
@@ -36,8 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
     'core.apps.CoreConfig',
     'users',
+    'api',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +65,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 
 ROOT_URLCONF = 'parking_backend.urls'
 
