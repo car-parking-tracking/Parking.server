@@ -30,6 +30,7 @@ class Command(BaseCommand):
     ],
     "object_type": "MultiLineString"
     }
+    "tariffs" : []
     """
     help = 'Наполнение базы данных информацией о платных московских парковках'
 
@@ -42,5 +43,6 @@ class Command(BaseCommand):
                     address=parking_lot['Address'],
                     coordinates=str(parking_lot['coordinates']),
                     car_capacity=parking_lot['CarCapacity'],
-                    object_type=parking_lot['object_type']
+                    object_type=parking_lot['object_type'],
+                    tariffs=parking_lot['Tariffs']
                 )
