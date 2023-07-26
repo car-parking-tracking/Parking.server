@@ -33,6 +33,12 @@ class ParkingLot(models.Model):
         blank=False,
         unique=False,
     )
+    tariffs = models.CharField(
+        verbose_name='Стоимость парковки',
+        max_length=2500,
+        blank=False,
+        unique=False
+    )
 
     class Meta:
         verbose_name = 'Парковка'
