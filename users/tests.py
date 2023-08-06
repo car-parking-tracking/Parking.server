@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-user_model = get_user_model()
-
 
 class UsersManagersTest(TestCase):
     """
@@ -14,6 +12,7 @@ class UsersManagersTest(TestCase):
         """
         Создание пользователя без лишних прав.
         """
+        user_model = get_user_model()
         user = user_model.objects.create(
             email='user@user.com', password='12345'
         )
@@ -33,6 +32,7 @@ class UsersManagersTest(TestCase):
         """
         Создание суперпользователя с корректными правами.
         """
+        user_model = get_user_model()
         admin_user = user_model.objects.create_superuser(
             email="super@user.com", password="12345"
         )
