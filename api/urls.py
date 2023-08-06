@@ -1,9 +1,7 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-
 from .views import ParkingLotViewSet
-
 
 router = SimpleRouter()
 router.register('parking_lots', ParkingLotViewSet, basename='parkinglots')

@@ -1,13 +1,11 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
-from rest_framework import serializers
-
 from djoser.conf import settings as djoser_settings
 from djoser.serializers import TokenCreateSerializer
+from rest_framework import serializers
 
 from parking_lots.models import ParkingLot
-
 
 User = get_user_model()
 
