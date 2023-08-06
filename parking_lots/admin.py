@@ -12,7 +12,7 @@ class ParkingLotAdmin(admin.ModelAdmin):
         'coordinates',
         'car_capacity'
     ]
-    search_fields = ['address', ]
+    search_fields = ['address', 'car_capacity']
 
 
 admin.site.register(ParkingLot, ParkingLotAdmin)
