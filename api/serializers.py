@@ -41,6 +41,6 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
             if self.user and not self.user.check_password(password):
                 self.fail(_('Неверные данные'))
 
-        if self.user:
-            return data
-        self.fail(_('Неверные данные'))
+        if not self.user:
+            self.fail(_('Неверные данные'))
+        return data
