@@ -14,7 +14,9 @@ class UsersManagersTest(TestCase):
         """
         Создание пользователя без лишних прав.
         """
-        user = user_model.objects.create(email='user@user.com', password='12345')
+        user = user_model.objects.create(
+            email='user@user.com', password='12345'
+        )
         self.assertEqual(user.email, 'user@user.com')
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
