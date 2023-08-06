@@ -15,6 +15,7 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 djoser==2.2.0
 drf-yasg==1.21.7
+flake8==6.1.0
 idna==3.4
 inflection==0.5.1
 isort==5.12.0
@@ -24,8 +25,9 @@ oauthlib==3.2.2
 packaging==23.1
 pep8==1.7.1
 platformdirs==3.9.1
+pycodestyle==2.11.0
 pycparser==2.21
-pyflakes==3.0.1
+pyflakes==3.1.0
 PyJWT==2.8.0
 pylint==2.17.4
 python-dotenv==1.0.0
