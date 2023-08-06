@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 
+User = get_user_model()
+
+
 class UsersManagersTest(TestCase):
     """
     Тестирование создания пользователя и
@@ -12,7 +15,7 @@ class UsersManagersTest(TestCase):
         """
         Создание пользователя без лишних прав.
         """
-        User = get_user_model()
+        
         user = User.objects.create(email='user@user.com', password='12345')
         self.assertEqual(user.email, 'user@user.com')
         self.assertTrue(user.is_active)
