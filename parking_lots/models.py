@@ -12,13 +12,13 @@ class ParkingLot(models.Model):
         max_length=150,
         blank=False,
     )
-    coordinates_x = models.FloatField(
+    latitude = models.FloatField(
         verbose_name='Координаты x',
         max_length=40,
         blank=False,
         unique=True,
     )
-    coordinates_y = models.FloatField(
+    longitude = models.FloatField(
         verbose_name='Координаты y',
         max_length=40,
         blank=False,
