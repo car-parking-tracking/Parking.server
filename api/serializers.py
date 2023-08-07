@@ -11,6 +11,8 @@ User = get_user_model()
 
 
 class ParkingLotSerializer(serializers.ModelSerializer):
+    is_favorited = serializers.BooleanField(read_only=True)
+
     class Meta:
         model = ParkingLot
         fields = [
