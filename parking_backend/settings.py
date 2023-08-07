@@ -28,7 +28,7 @@ ALLOWED_HOSTS = []
 DJOSER = {
     "LOGIN FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "ACTIVATION_URL": "api/v1/users/activation/{uid}/{token}/",
     'SERIALIZERS': {
         'token_create': 'api.serializers.CustomTokenCreateSerializer',
     },
