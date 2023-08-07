@@ -9,7 +9,8 @@ from rest_framework.response import Response
 
 from parking_lots.models import ParkingLot
 
-from .serializers import ParkingLotSerializer
+from .serializers import ParkingLotSerializer, FeatureCollectionSerializer, \
+    AddToFavsSerializer
 
 
 class ParkingLotViewSet(viewsets.ModelViewSet):
@@ -17,8 +18,6 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     List, retrieve and create parking lots.
     Accepts url parameters to filter objects: address:str, car_capacity:int.
     """
-
-    queryset = ParkingLot.objects.all()
     serializer_class = ParkingLotSerializer
     # permission_classes = [IsAuthenticated]
     http_method_names = ['get', 'post']
@@ -78,10 +77,10 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     @action(
         detail=True,
         methods=['post', 'delete'],
+        serializer_class=AddToFavsSerializer
     )
     def favorite(self, request, pk=None):
-        """Описывает поведение эндпоинта для добавления рецепта
-        в избранное для текущего пользователя."""
+        """Adding parking lot to favorites."""
         recipe = get_object_or_404(ParkingLot, id=pk)
         user = request.user
 
@@ -93,3 +92,17 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
             },
             pk=pk
         )
+
+
+class FeaturesViewSet(ParkingLotViewSet):
+    """List, retrieve parking lots with json needed
+    for drawing points on map."""
+    serializer_class = FeatureCollectionSerializer
+    http_method_names = ['get']
+
+    def list(self, request, *args, **kwargs):
+        """Переопределил метод, чтобы сериализатор не применялся
+        несколько раз (к каждому объекту querysey), а только единожды
+        ко всему queryset."""
+        serializer = FeatureCollectionSerializer(request.data)
+        return Response(serializer.data)
