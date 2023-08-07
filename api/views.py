@@ -1,4 +1,4 @@
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from django.db.models import Case, When, BooleanField
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
@@ -19,8 +19,8 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     Accepts url parameters to filter objects: address:str, car_capacity:int.
     """
     serializer_class = ParkingLotSerializer
-    # permission_classes = [IsAuthenticated]
-    http_method_names = ['get', 'post']
+    permission_classes = [AllowAny]
+    http_method_names = ['get']
 
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('address', 'car_capacity')
@@ -81,11 +81,11 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     )
     def favorite(self, request, pk=None):
         """Adding parking lot to favorites."""
-        recipe = get_object_or_404(ParkingLot, id=pk)
+        parking_lot = get_object_or_404(ParkingLot, id=pk)
         user = request.user
 
         return self.create_delete(
-            user.favorites, request=request, recipe=recipe,
+            user.favorites, request=request, parking_lot=parking_lot,
             error_messages={
                 'exists': 'Парковка уже добавлена в избранное.',
                 '!exists': 'Парковки нет в избранном.'
@@ -102,7 +102,7 @@ class FeaturesViewSet(ParkingLotViewSet):
 
     def list(self, request, *args, **kwargs):
         """Переопределил метод, чтобы сериализатор не применялся
-        несколько раз (к каждому объекту querysey), а только единожды
+        несколько раз (к каждому объекту queryset), а только единожды
         ко всему queryset."""
         serializer = FeatureCollectionSerializer(request.data)
         return Response(serializer.data)
