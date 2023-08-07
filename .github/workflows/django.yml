@@ -31,4 +31,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python manage.py 
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
