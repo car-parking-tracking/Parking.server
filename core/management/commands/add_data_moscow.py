@@ -41,8 +41,8 @@ class Command(BaseCommand):
             for parking_lot in json_data:
                 ParkingLot.objects.create(
                     address=parking_lot['Address'],
-                    coordinates=str(parking_lot['coordinates']),
+                    latitude=parking_lot['coordinates'][0][0][1],
+                    longitude=parking_lot['coordinates'][0][0][0],
                     car_capacity=parking_lot['CarCapacity'],
-                    object_type=parking_lot['object_type'],
                     tariffs=parking_lot['Tariffs']
                 )
