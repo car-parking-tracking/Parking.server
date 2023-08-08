@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'parking_lots.apps.ParkingLotsConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
+    'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',

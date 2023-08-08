@@ -12,8 +12,14 @@ class ParkingLot(models.Model):
         max_length=150,
         blank=False,
     )
-    coordinates = models.CharField(
-        verbose_name='Координаты парковки',
+    latitude = models.FloatField(
+        verbose_name='Координаты x',
+        max_length=40,
+        blank=False,
+        unique=True,
+    )
+    longitude = models.FloatField(
+        verbose_name='Координаты y',
         max_length=40,
         blank=False,
         unique=True,
@@ -26,12 +32,6 @@ class ParkingLot(models.Model):
             limit_value=1,
             message='Количество парковочных мест не может быть меньше одного'
         )]
-    )
-    object_type = models.CharField(
-        verbose_name='Тип парковки для отрисовки',
-        max_length=20,
-        blank=False,
-        unique=False,
     )
     tariffs = models.CharField(
         verbose_name='Стоимость парковки',
