@@ -16,13 +16,11 @@ class ParkingLot(models.Model):
         verbose_name='Координаты x',
         max_length=40,
         blank=False,
-        unique=True,
     )
     longitude = models.FloatField(
         verbose_name='Координаты y',
         max_length=40,
         blank=False,
-        unique=True,
     )
     car_capacity = models.IntegerField(
         verbose_name='Общее количество парковочных мест',
