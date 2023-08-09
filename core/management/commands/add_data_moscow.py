@@ -16,19 +16,10 @@ class Command(BaseCommand):
     {
     "Address": "город Москва, улица Арбат, дом 54/2, строение 1",
     "CarCapacity": 5,
-    "coordinates": [
-      [
-        [
-          37.583203,
-          55.746957
-        ],
-        [
-          37.584011,
-          55.747193
-        ]
-      ]
+        "coordinates": [
+      37.591079,
+      55.778752
     ],
-    "object_type": "MultiLineString"
     }
     "tariffs" : []
     """
@@ -41,8 +32,8 @@ class Command(BaseCommand):
             for parking_lot in json_data:
                 ParkingLot.objects.create(
                     address=parking_lot['Address'],
-                    coordinates=str(parking_lot['coordinates']),
+                    latitude=float(parking_lot['coordinates'][1]),
+                    longitude=float(parking_lot['coordinates'][0]),
                     car_capacity=parking_lot['CarCapacity'],
-                    object_type=parking_lot['object_type'],
                     tariffs=parking_lot['Tariffs']
                 )
