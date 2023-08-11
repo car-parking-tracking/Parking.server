@@ -1,15 +1,15 @@
 from django.urls import include, path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from api.views import FeaturesViewSet, MyUserViewSet, ParkingLotViewSet
 
 app_name = 'api'
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register(r'users', MyUserViewSet, basename='users')
-router.register('parking_lots', ParkingLotViewSet, basename='parkinglots')
+router.register(r'parking_lots', ParkingLotViewSet, basename='parkinglots')
 router.register(
-    'feature_collection', FeaturesViewSet, basename='feature_collection'
+    r'feature_collection', FeaturesViewSet, basename='feature_collection'
 )
 
 urlpatterns = [

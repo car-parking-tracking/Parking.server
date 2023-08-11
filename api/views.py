@@ -5,7 +5,7 @@ from djoser import views
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import (AllowAny, IsAuthenticated)
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from api.serializers import (AddToFavsSerializer, FeatureCollectionSerializer,
@@ -18,7 +18,7 @@ from users.models import CustomUser
 class MyUserViewSet(views.UserViewSet):
     """Управление созданием пользователя."""
     queryset = CustomUser.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_or_create_serializer_class(self):
         if self.action == 'set_password':
