@@ -26,11 +26,13 @@ ALLOWED_HOSTS = []
 
 # DJOSER SETTINGS
 DJOSER = {
-    "LOGIN FIELD": "email",
-    "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "api/v1/users/activation/{uid}/{token}/",
+    'HIDE_USERS': False,
+    'LOGIN_FIELD': 'email',
     'SERIALIZERS': {
-        'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        'user_create': 'api.serializers.MyUserCreateSerializer',
+        'user': 'api.serializers.MyUserListSerializer',
+        'current_user': 'api.serializers.MyUserListSerializer',
+        'set_password': 'api.serializers.UserPasswordSerializer',
     },
 }
 
@@ -43,15 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'parking_lots.apps.ParkingLotsConfig',
+
+    'django_filters',
+    'djoser',
+    'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_filters',
-    'drf_yasg',
+
+    'api.apps.ApiConfig',
     'core.apps.CoreConfig',
-    'users',
-    'api',
-    'djoser',
+    'parking_lots.apps.ParkingLotsConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +69,9 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
@@ -125,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -134,7 +141,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static_backend'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media_backend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

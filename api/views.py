@@ -1,16 +1,31 @@
-from rest_framework.permissions import AllowAny
+
 from django.db.models import Case, When, BooleanField
 from django_filters.rest_framework import DjangoFilterBackend
+from djoser import views
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework import status
+from rest_framework.permissions import (AllowAny, IsAuthenticated)
 from rest_framework.response import Response
 
+from api.serializers import (AddToFavsSerializer, FeatureCollectionSerializer,
+                             MyUserListSerializer, MyUserCreateSerializer,
+                             ParkingLotSerializer, UserPasswordSerializer)
 from parking_lots.models import ParkingLot
+from users.models import CustomUser
 
-from .serializers import ParkingLotSerializer, FeatureCollectionSerializer, \
-    AddToFavsSerializer
+
+class MyUserViewSet(views.UserViewSet):
+    """Управление созданием пользователя."""
+    queryset = CustomUser.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def get_or_create_serializer_class(self):
+        if self.action == 'set_password':
+            return UserPasswordSerializer
+        elif self.action == 'create':
+            return MyUserCreateSerializer
+        return MyUserListSerializer
 
 
 class ParkingLotViewSet(viewsets.ModelViewSet):
