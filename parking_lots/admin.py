@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ParkingLot
+from parking_lots.models import ParkingLot
 
 
 class ParkingLotAdmin(admin.ModelAdmin):
