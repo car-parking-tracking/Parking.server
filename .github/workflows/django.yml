@@ -53,6 +53,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           password: ${{ secrets.HOST_PASSWORD }}
           script: |
-            cd infra/
+            ls
+            cd infra
             sudo docker compose down --rmi all
             sudo docker compose up --build -d
