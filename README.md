@@ -48,3 +48,11 @@ parking_server/                  <- project root
 - Перейдите в браузере по адресу:
 
     [http://127.0.0.1:8000/api/v1/]([http://127.0.0.1:8000/api/v1/])
+
+- Чтобы собрать и развернуть в контейнерах:
+
+`docker-compose up -d --build`
+
+- Наполните базу данных ингредиентами:
+
+`docker-compose exec backend python manage.py import_csv`
