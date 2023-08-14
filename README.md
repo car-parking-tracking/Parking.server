@@ -55,4 +55,4 @@ parking_server/                  <- project root
 
 - Наполните базу данных ингредиентами:
 
-`docker-compose exec backend python manage.py import_csv`
+`docker-compose exec backend python manage.py add_data_moscow`
