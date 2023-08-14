@@ -92,10 +92,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'parking_backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+CONTAINER_DB = False
+if CONTAINER_DB:
+    DATABASES = {
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
+        'NAME': os.getenv('DB_NAME', 'db_django'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+    }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
