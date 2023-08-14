@@ -13,7 +13,10 @@ services:
       - db_volume:/var/lib/db_volume
 
   backend:
-    image: kreamsandwich/parking_backend:latest
+    container_name: backend
+    build:
+      context: ../.
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8000:8000"
