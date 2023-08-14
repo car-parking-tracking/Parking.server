@@ -56,3 +56,19 @@ parking_server/                  <- project root
 - Наполните базу данных ингредиентами:
 
 `docker-compose exec backend python manage.py add_data_moscow`
+
+- Чтобы остановить и удалить контейнеры:
+
+`docker-compose down`
+
+### Endpoints:
+
+- Парковки, включающие в себя координаты в формате x, y 
+- пример - 25.122923, 55.189352
+
+`"parking_lots": "http://127.0.0.1:8000/api/v1/parking_lots/"`
+
+- Список, извлечение парковочных мест с помощью необходимого json
+для рисования точек на карте.
+
+`"feature_collection": "http://127.0.0.1:8000/api/v1/feature_collection/"`
