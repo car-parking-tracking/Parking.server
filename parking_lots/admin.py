@@ -15,7 +15,7 @@ class ParkingLotAdmin(admin.ModelAdmin):
     search_fields = ['address', 'car_capacity']
 
     def get_coordinates(self, obj):
-        return obj.coordinates_x, obj.coordinates_y
+        return obj.latitude, obj.longitude
 
 
 admin.site.register(ParkingLot, ParkingLotAdmin)
