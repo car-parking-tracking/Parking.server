@@ -20,8 +20,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'backend',
-    'http://' + str(os.getenv('HOST_ADDRESS')),
-    'https://' + str(os.getenv('HOST_ADDRESS')),
+    str(os.getenv('HOST_ADDRESS')),
+    str(os.getenv('HOST_ADDRESS')),
 ]
 
 CSRF_TRUSTED_ORIGINS = [
