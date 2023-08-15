@@ -6,7 +6,7 @@ services:
     container_name: mysql
     restart: unless-stopped
     env_file:
-      - ./.env
+      - .env
     ports:
       - "3306:3306"
     volumes:
@@ -20,7 +20,7 @@ services:
     volumes:
       - static_volume:/backend/static/
     env_file:
-      - ./.env
+      - .env
     depends_on:
       - db
 
