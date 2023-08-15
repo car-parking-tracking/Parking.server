@@ -95,3 +95,6 @@ dmypy.json
 cython_debug/
 .idea/
 static
+*/.env
+*.env
+parking_project/.env
