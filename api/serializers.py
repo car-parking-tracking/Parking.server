@@ -30,11 +30,12 @@ class ParkingLotSerializer(serializers.ModelSerializer):
         return bool(user.favorites.filter(id=obj.id).exists())
 
 
-class AddToFavsSerializer(serializers.ModelSerializer):
+class AddToFavsSerializer(ParkingLotSerializer):
     class Meta:
         model = ParkingLot
         fields = [
-            'id'
+            'id',
+            'is_favorited'
         ]
 
 

@@ -56,7 +56,7 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
         else:
             user.favorites.add(parking_lot)
 
-        serializer = ParkingLotSerializer(parking_lot)
+        serializer = self.get_serializer(parking_lot)
         serializer.context['request'] = self.request
         return Response(
             serializer.data, status=status.HTTP_200_OK
