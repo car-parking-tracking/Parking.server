@@ -13,7 +13,10 @@ services:
       - db_volume:/var/lib/db_volume
 
   backend:
-    image: kreamsandwich/parking_backend:latest
+    container_name: backend
+    build:
+      context: ../.
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8000:8000"
@@ -30,7 +33,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./local.nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/var/html/static/
     depends_on:
       - backend

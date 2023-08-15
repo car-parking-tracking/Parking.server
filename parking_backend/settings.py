@@ -20,10 +20,14 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'backend',
+    str(os.getenv('HOST_ADDRESS')),
+    str(os.getenv('HOST_ADDRESS')),
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
+    'http://' + str(os.getenv('HOST_ADDRESS')),
+    'https://' + str(os.getenv('HOST_ADDRESS')),
 ]
 
 # DJOSER SETTINGS
