@@ -1,5 +1,3 @@
-from typing import List
-
 from django.contrib.auth import authenticate, get_user_model
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
@@ -13,19 +11,23 @@ User = get_user_model()
 
 
 class ParkingLotSerializer(serializers.ModelSerializer):
-    is_favorited = serializers.BooleanField(read_only=True)
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = ParkingLot
         fields = [
             'id',
+            'is_favorited',
             'address',
             'longitude',
             'latitude',
             'car_capacity',
-            'tariffs',
-            'is_favorited'
+            'tariffs'
         ]
+
+    def get_is_favorited(self, obj):
+        user = self.context.get('request').user
+        return bool(user.favorites.filter(id=obj.id).exists())
 
 
 class AddToFavsSerializer(serializers.ModelSerializer):
