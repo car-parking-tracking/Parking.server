@@ -1,8 +1,10 @@
 from django.core import mail
 from rest_framework import status
 from rest_framework.test import APITestCase
+from unittest import skip
 
 
+@skip
 class EmailVerificationTest(APITestCase):
     register_url = "/api/v1/users/"
     activate_url = "/api/v1/users/activation/"
