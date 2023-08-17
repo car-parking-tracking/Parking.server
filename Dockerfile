@@ -3,5 +3,4 @@ WORKDIR /backend
 RUN pip install --upgrade pip
 COPY . .
 RUN pip install -r requirements.txt --no-cache-dir
-COPY entrypoint.sh .
-ENTRYPOINT [ "sh", "entrypoint.sh" ]
+CMD [ "gunicorn", "parking_backend.wsgi:application", "--bind", "0.0.0.0:8000" ]
