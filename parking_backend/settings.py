@@ -2,8 +2,14 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from corsheaders.defaults import default_headers
+
 
 load_dotenv()
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-Amz-Date',
+]
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -22,12 +28,14 @@ ALLOWED_HOSTS = [
     'backend',
     str(os.getenv('HOST_ADDRESS')),
     str(os.getenv('HOST_ADDRESS')),
+    'parkonaft.acceleratorpracticum.ru',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
     'http://' + str(os.getenv('HOST_ADDRESS')),
     'https://' + str(os.getenv('HOST_ADDRESS')),
+    'parkonaft.acceleratorpracticum.ru'
 ]
 
 # DJOSER SETTINGS
@@ -116,9 +124,6 @@ else:
         }
     }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
