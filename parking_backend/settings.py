@@ -96,22 +96,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'parking_backend.wsgi.application'
 
-CONTAINER_DB = False
+CONTAINER_DB = True
 if CONTAINER_DB:
     DATABASES = {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
-        'NAME': os.getenv('DB_NAME', 'db_django'),
-        'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
-        'HOST': os.getenv('DB_HOST', 'db'),
-        'PORT': os.getenv('DB_PORT', '3306'),
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
+            'NAME': os.getenv('DB_NAME', 'db_django'),
+            'USER': os.getenv('DB_USER', 'root'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
+            'HOST': os.getenv('DB_HOST', 'db'),
+            'PORT': os.getenv('DB_PORT', '3306'),
+        }
     }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
 
 # Password validation

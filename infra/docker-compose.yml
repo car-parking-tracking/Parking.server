@@ -3,14 +3,13 @@ services:
 
   db:
     image: mysql/mysql-server:latest
-    container_name: mysql
     restart: unless-stopped
     env_file:
       - .env
     ports:
       - "3306:3306"
     volumes:
-      - db_volume:/var/lib/db_volume
+      - 'parking_volume:/var/lib/mysql'
 
   backend:
     image: kreamsandwich/parking_backend:latest
@@ -40,4 +39,4 @@ services:
 
 volumes:
   static_volume:
-  db_volume:
+  parking_volume:
