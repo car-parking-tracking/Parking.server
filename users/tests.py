@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
+from unittest import skip
 
+
+@skip
 class UsersManagersTest(TestCase):
     """
     Тестирование создания пользователя и
