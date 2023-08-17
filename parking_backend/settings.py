@@ -35,7 +35,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
     'http://' + str(os.getenv('HOST_ADDRESS')),
     'https://' + str(os.getenv('HOST_ADDRESS')),
-    'parkonaft.acceleratorpracticum.ru'
+    'http://parkonaft.acceleratorpracticum.ru',
+    'https://parkonaft.acceleratorpracticum.ru',
 ]
 
 # DJOSER SETTINGS
