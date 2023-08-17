@@ -11,26 +11,31 @@ User = get_user_model()
 
 
 class ParkingLotSerializer(serializers.ModelSerializer):
-    is_favorited = serializers.BooleanField(read_only=True)
+    is_favorited = serializers.SerializerMethodField()
 
     class Meta:
         model = ParkingLot
         fields = [
             'id',
+            'is_favorited',
             'address',
             'longitude',
             'latitude',
             'car_capacity',
-            'tariffs',
-            'is_favorited'
+            'tariffs'
         ]
 
+    def get_is_favorited(self, obj):
+        user = self.context.get('request').user
+        return bool(user.favorites.filter(id=obj.id).exists())
 
-class AddToFavsSerializer(serializers.ModelSerializer):
+
+class AddToFavsSerializer(ParkingLotSerializer):
     class Meta:
         model = ParkingLot
         fields = [
-            'id'
+            'id',
+            'is_favorited'
         ]
 
 

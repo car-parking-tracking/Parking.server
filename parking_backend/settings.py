@@ -39,6 +39,12 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://' + str(os.getenv('HOST_ADDRESS')),
+    'https://' + str(os.getenv('HOST_ADDRESS')),
+]
+
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
@@ -62,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'corsheaders',
     'drf_yasg',
     'core.apps.CoreConfig',
     'users',
@@ -72,6 +79,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
