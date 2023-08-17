@@ -1,5 +1,4 @@
 from rest_framework.permissions import AllowAny
-from django.db.models import Case, When, BooleanField
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
