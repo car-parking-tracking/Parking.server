@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from users.managers import CustomUserManager
+from parking_lots.models import ParkingLot
 
 
 class CustomUser(AbstractUser):
@@ -25,6 +26,11 @@ class CustomUser(AbstractUser):
     date_joined = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_('дата регистрации')
+    )
+    favorites = models.ManyToManyField(
+        ParkingLot,
+        related_name='favorites',
+        verbose_name=_('избранное'),
     )
 
     USERNAME_FIELD = 'email'

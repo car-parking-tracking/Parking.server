@@ -14,7 +14,8 @@ class CustomUserAdmin(admin.ModelAdmin):
         'email',
         'is_staff',
         'is_active',
-        'date_joined'
+        'date_joined',
+        'favorites'
     ]
     list_filter = [
         'email',
@@ -22,7 +23,7 @@ class CustomUserAdmin(admin.ModelAdmin):
         'is_active'
     ]
     readonly_fields = [
-        'date_joined'
+        'date_joined',
     ]
     fieldsets = [
         (
@@ -40,3 +41,6 @@ class CustomUserAdmin(admin.ModelAdmin):
             }
         )
     ]
+
+    def favorites(self, obj):
+        return obj.favorites.all()

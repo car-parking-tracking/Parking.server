@@ -40,57 +40,26 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
             )
         )
 
-    @staticmethod
-    def create_delete(
-        query, request, parking_lot: ParkingLot, error_messages: dict, pk=None
-    ):
-        """Для наследования эндпоинтами типа добавить в manytomany."""
-        parking_lot = get_object_or_404(ParkingLot, id=pk)
-
-        if request.method == 'POST':
-            if query.filter(id=parking_lot.id).exists():
-                return Response(
-                    data={
-                        'errors': error_messages['exists']
-                    },
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            query.add(parking_lot)
-            serializer = ParkingLotSerializer(parking_lot)
-            return Response(
-                data=serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-
-        if not query.filter(id=parking_lot.id).exists():
-            return Response(
-                data={
-                    'errors': error_messages['!exists']
-                },
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        query.remove(parking_lot)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
     @action(
         detail=True,
-        methods=['post', 'delete'],
-        serializer_class=AddToFavsSerializer
+        methods=['post'],
+        serializer_class=AddToFavsSerializer,
+        http_method_names=['post']
     )
     def favorite(self, request, pk=None):
         """Adding parking lot to favorites."""
         parking_lot = get_object_or_404(ParkingLot, id=pk)
         user = request.user
 
-        return self.create_delete(
-            user.favorites, request=request, parking_lot=parking_lot,
-            error_messages={
-                'exists': 'Парковка уже добавлена в избранное.',
-                '!exists': 'Парковки нет в избранном.'
-            },
-            pk=pk
+        if user.favorites.filter(id=parking_lot.id).exists():
+            user.favorites.remove(parking_lot)
+        else:
+            user.favorites.add(parking_lot)
+
+        serializer = self.get_serializer(parking_lot)
+        serializer.context['request'] = self.request
+        return Response(
+            serializer.data, status=status.HTTP_200_OK
         )
 
 
