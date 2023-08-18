@@ -113,7 +113,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'parking_backend.wsgi.application'
 
-CONTAINER_DB = False
+CONTAINER_DB = True
 if CONTAINER_DB:
     DATABASES = {
         'default': {

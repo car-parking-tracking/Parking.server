@@ -19,6 +19,7 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     serializer_class = ParkingLotSerializer
     permission_classes = [AllowAny]
     http_method_names = ['get']
+    queryset = ParkingLot.objects.all()
 
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('address', 'car_capacity')
