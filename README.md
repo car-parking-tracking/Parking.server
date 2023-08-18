@@ -53,7 +53,7 @@ parking_server/                  <- project root
 
 `docker-compose up -d --build`
 
-- Наполните базу данных ингредиентами:
+- Наполните базу данных парковками:
 
 `docker-compose exec backend python manage.py add_data_moscow`
 
@@ -61,14 +61,14 @@ parking_server/                  <- project root
 
 `docker-compose down`
 
-### Endpoints:
+### Examples:
 
-- Парковки, включающие в себя координаты в формате x, y 
-- пример - 25.122923, 55.189352
+`GET api/v1/parking_lots/` - Получение всего списка парковок
+`GET api/v1/parking_lots/{id}/` - Получение парковки по id
 
-`"parking_lots": "http://127.0.0.1:8000/api/v1/parking_lots/"`
-
-- Список, извлечение парковочных мест с помощью необходимого json
+`GET api/v1/feature_collection/` - Извлечение списка парковочных мест с помощью необходимого json
+для рисования точек на карте.
+`GET api/v1/feature_collection/{id}/` - Извлечение парковочного места с помощью необходимого json
 для рисования точек на карте.
 
-`"feature_collection": "http://127.0.0.1:8000/api/v1/feature_collection/"`
+Подробная документация доступна по адресу `http://parkonaft.acceleratorpracticum.ru/swagger/`
