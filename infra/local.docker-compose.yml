@@ -1,17 +1,6 @@
 version: '3.8'
 services:
 
-  db:
-    image: mysql/mysql-server:latest
-    container_name: mysql
-    restart: unless-stopped
-    env_file:
-      - ./.env
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_volume:/var/lib/db_volume
-
   backend:
     container_name: backend
     build:
@@ -24,8 +13,14 @@ services:
       - static_volume:/backend/static/
     env_file:
       - ./.env
+  
+  frontend:
+    image: shinonhorror/repo:latest
+    restart: always
+    ports:
+      - "3000:3000"
     depends_on:
-      - db
+      - backend
 
   nginx:
     image: nginx:1.19.3
@@ -37,10 +32,9 @@ services:
       - static_volume:/var/html/static/
     depends_on:
       - backend
-      - db
+      - frontend
     env_file:
       ./.env
 
 volumes:
   static_volume:
-  db_volume:

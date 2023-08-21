@@ -1,5 +1,4 @@
 from rest_framework.permissions import AllowAny
-from django.db.models import Case, When, BooleanField
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
@@ -9,8 +8,7 @@ from rest_framework.response import Response
 
 from parking_lots.models import ParkingLot
 
-from .serializers import ParkingLotSerializer, FeatureCollectionSerializer, \
-    AddToFavsSerializer
+from .serializers import ParkingLotSerializer, FeatureCollectionSerializer
 
 
 class ParkingLotViewSet(viewsets.ModelViewSet):
@@ -21,29 +19,15 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     serializer_class = ParkingLotSerializer
     permission_classes = [AllowAny]
     http_method_names = ['get']
+    queryset = ParkingLot.objects.all()
 
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('address', 'car_capacity')
 
-    def get_queryset(self):
-        """Аннотация queryset для фильтрации парковок по вхождению
-        в избранное пользователя."""
-        favorites = []
-        if not self.request.user.is_anonymous:
-            favorites = self.request.user.favorites.values('id')
-
-        return ParkingLot.objects.all().annotate(
-            is_favorited=Case(
-                When(id__in=favorites, then=True),
-                default=False,
-                output_field=BooleanField()
-            )
-        )
-
     @action(
         detail=True,
         methods=['post'],
-        serializer_class=AddToFavsSerializer,
+        serializer_class=ParkingLotSerializer,
         http_method_names=['post']
     )
     def favorite(self, request, pk=None):

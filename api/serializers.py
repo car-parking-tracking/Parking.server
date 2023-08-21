@@ -27,16 +27,7 @@ class ParkingLotSerializer(serializers.ModelSerializer):
 
     def get_is_favorited(self, obj):
         user = self.context.get('request').user
-        return bool(user.favorites.filter(id=obj.id).exists())
-
-
-class AddToFavsSerializer(ParkingLotSerializer):
-    class Meta:
-        model = ParkingLot
-        fields = [
-            'id',
-            'is_favorited'
-        ]
+        return user.favorites.filter(id=obj.id).exists()
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):

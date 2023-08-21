@@ -3,14 +3,13 @@ services:
 
   db:
     image: mysql/mysql-server:latest
-    container_name: mysql
     restart: unless-stopped
     env_file:
       - .env
     ports:
       - "3306:3306"
     volumes:
-      - db_volume:/var/lib/db_volume
+      - 'parking_volume:/var/lib/mysql'
 
   backend:
     image: kreamsandwich/parking_backend:latest
@@ -23,6 +22,14 @@ services:
       - .env
     depends_on:
       - db
+  
+  frontend:
+    image: shinonhorror/repo:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
   nginx:
     image: nginx:1.19.3
@@ -35,9 +42,10 @@ services:
     depends_on:
       - backend
       - db
+      - frontend
     env_file:
       ./.env
 
 volumes:
   static_volume:
-  db_volume:
+  parking_volume:
