@@ -2,14 +2,9 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from corsheaders.defaults import default_headers
 
 
 load_dotenv()
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'X-Amz-Date',
-]
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -37,12 +32,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://' + str(os.getenv('HOST_ADDRESS')),
     'http://parkonaft.acceleratorpracticum.ru',
     'https://parkonaft.acceleratorpracticum.ru',
-]
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://' + str(os.getenv('HOST_ADDRESS')),
-    'https://' + str(os.getenv('HOST_ADDRESS')),
 ]
 
 # DJOSER SETTINGS
