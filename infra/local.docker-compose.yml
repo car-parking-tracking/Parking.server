@@ -12,7 +12,9 @@ services:
       - pg_data_volume:/var/lib/postgresql/data
 
   backend:
-    image: parkonaft/server:latest
+    build:
+      context: ../.
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8000:8000"

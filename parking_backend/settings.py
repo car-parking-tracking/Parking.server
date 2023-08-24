@@ -2,11 +2,9 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from corsheaders.defaults import default_headers
 
 
 load_dotenv()
-
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -36,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
+
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
@@ -59,8 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'corsheaders',
-    'пше',
+    'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
@@ -70,7 +68,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
