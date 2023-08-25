@@ -41,7 +41,8 @@ jobs:
         with:
           host: ${{ secrets.HOST_ADDRESS }}
           username: ${{ secrets.HOST_USER }}
-          password: ${{ secrets.HOST_PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.HOST_PASSWORD }}
           source: "docker-compose.yml"
           target: "/home/backend/infra"
       - name: Executing remote ssh commands to deploy
@@ -49,7 +50,8 @@ jobs:
         with:
           host: ${{ secrets.HOST_ADDRESS }}
           username: ${{ secrets.HOST_USER }}
-          password: ${{ secrets.HOST_PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.HOST_PASSWORD }}
           script: |
             cd ../home/backend/infra/
             sudo docker compose -f docker-compose.yml down
