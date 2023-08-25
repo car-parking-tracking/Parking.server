@@ -1,11 +1,11 @@
 name: Push to dockerhub & deploy
 on:
   pull_request:
-    types:
-      - closed
     branches:
       - main
       - develop
+    paths-ignore:
+      - "*/README.md"
 
 jobs:  
   build_backend_and_push_to_docker_hub:
