@@ -39,17 +39,17 @@ jobs:
       - name: Copy docker-compose.production.yml via ssh
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST_ADDRESS }}
-          username: ${{ secrets.HOST_USER }}
-          passphrase: ${{ secrets.HOST_PASSWORD }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "docker-compose.yml"
-          target: "infra"
+          target: "/home/backend/infra"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_ADDRESS }}
-          username: ${{ secrets.HOST_USER }}
-          passphrase: ${{ secrets.HOST_PASSWORD }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd ../home/backend/infra/
             sudo docker compose -f docker-compose.yml down
