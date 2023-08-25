@@ -41,16 +41,14 @@ jobs:
         with:
           host: ${{ secrets.HOST_ADDRESS }}
           username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.HOST_PASSWORD }}
           source: "docker-compose.yml"
-          target: "/home/backend/infra"
+          target: "infra"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_ADDRESS }}
           username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.HOST_PASSWORD }}
           script: |
             cd ../home/backend/infra/
