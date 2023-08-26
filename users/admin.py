@@ -1,46 +1,61 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
 
 User = get_user_model()
 
 
 @admin.register(User)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     """
     Кастомизированная админка.
-    Убрал поле is_superuser.
+    Позволяет создать нового пользователя.
     """
-    list_display = [
+    list_display = (
         'email',
         'is_staff',
         'is_active',
         'date_joined',
-        'favorites'
-    ]
-    list_filter = [
+    )
+    list_filter = (
         'email',
         'is_staff',
         'is_active'
-    ]
-    readonly_fields = [
+    )
+    ordering = ('email',)
+    readonly_fields = (
         'date_joined',
-    ]
-    fieldsets = [
+    )
+    fieldsets = (
         (
             None,
             {
-                'fields': ['email', 'first_name', 'last_name', 'date_joined']
+                'fields': ('email', 'first_name', 'last_name', 'date_joined')
             }
         ),
         (
             'Permissions',
             {
-                'fields': [
+                'fields': (
                     'is_staff', 'is_active', 'groups', 'user_permissions'
-                ]
+                )
             }
         )
-    ]
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                'classes': ('wide',),
+                'fields': (
+                    'email',
+                    'password1',
+                    'password2',
+                    'is_staff'
+                ),
+            },
+        ),
+    )
 
     def favorites(self, obj):
         return obj.favorites.all()
