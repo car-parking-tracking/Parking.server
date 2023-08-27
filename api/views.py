@@ -55,6 +55,7 @@ class FeaturesViewSet(ParkingLotViewSet):
     for drawing points on map."""
     serializer_class = FeatureCollectionSerializer
     http_method_names = ['get']
+    pagination_class = None
 
     def list(self, request, *args, **kwargs):
         """Переопределил метод, чтобы сериализатор не применялся
