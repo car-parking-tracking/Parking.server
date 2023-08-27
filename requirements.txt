@@ -9,9 +9,7 @@ cryptography==41.0.2
 defusedxml==0.7.1
 dill==0.3.7
 Django==4.2.3
-django-cors-headers==4.2.0
 django-filter==23.2
-django-mysql==4.11.0
 django-templated-mail==1.1.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
@@ -23,7 +21,6 @@ inflection==0.5.1
 isort==5.12.0
 lazy-object-proxy==1.9.0
 mccabe==0.7.0
-mysqlclient==2.2.0
 oauthlib==3.2.2
 packaging==23.1
 pep8==1.7.1
@@ -47,3 +44,4 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==2.0.4
 wrapt==1.15.0
+psycopg2-binary==2.9.3
