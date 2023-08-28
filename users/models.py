@@ -16,10 +16,10 @@ class CustomUser(AbstractUser):
         unique=True
     )
     first_name = models.CharField(
-        blank=True, max_length=150, verbose_name=_('first name')
+        blank=True, max_length=150, verbose_name=_('имя')
     )
     last_name = models.CharField(
-        blank=True, max_length=150, verbose_name=_('last name')
+        blank=True, max_length=150, verbose_name=_('фамилия')
     )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

@@ -2,17 +2,17 @@ version: '3.8'
 services:
 
   db:
-    image: mysql/mysql-server:latest
+    image: postgres:13.0-alpine
     restart: unless-stopped
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - 'parking_volume:/var/lib/mysql'
+      - pg_data_volume:/var/lib/postgresql/data
 
   backend:
-    image: kreamsandwich/parking_backend:latest
+    image: parkonaft/server:latest
     restart: always
     ports:
       - "8000:8000"
@@ -22,9 +22,9 @@ services:
       - .env
     depends_on:
       - db
-  
+
   frontend:
-    image: shinonhorror/repo:latest
+    image: parkonaft/client:latest
     restart: always
     ports:
       - "3000:3000"
@@ -48,4 +48,4 @@ services:
 
 volumes:
   static_volume:
-  parking_volume:
+  pg_data_volume:
