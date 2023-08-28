@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings as djoser_settings
@@ -6,13 +6,14 @@ from djoser.serializers import TokenCreateSerializer, UserCreateSerializer
 from rest_framework import serializers
 
 from parking_lots.models import ParkingLot
-from users.models import CustomUser
+
+User = get_user_model()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     '''Сериализатор для регистрации пользователей'''
     class Meta:
-        model = CustomUser
+        model = User
         fields = (
             'id',
             'first_name',
@@ -25,7 +26,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     '''Сериализатор пользователя'''
     class Meta:
-        model = CustomUser
+        model = User
         fields = (
             'id',
             'first_name',
@@ -69,7 +70,7 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
             password=password
         )
         if not self.user:
-            self.user = get_object_or_404(CustomUser, **params)
+            self.user = get_object_or_404(User, **params)
             if self.user and not self.user.check_password(password):
                 self.fail(_('Неверные данные'))
 
