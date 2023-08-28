@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
     'http://127.0.0.1',
     'http://' + str(os.getenv('HOST_ADDRESS')),
     'https://' + str(os.getenv('HOST_ADDRESS')),
@@ -60,7 +61,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'corsheaders',
-    'пше',
     'core.apps.CoreConfig',
     'users',
     'api',

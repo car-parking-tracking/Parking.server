@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
@@ -7,8 +7,10 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from parking_lots.models import ParkingLot
+from users.models import CustomUser
 
-from .serializers import ParkingLotSerializer, FeatureCollectionSerializer
+from .serializers import (ParkingLotSerializer, FeatureCollectionSerializer,
+                          CustomUserSerializer, CustomUserCreateSerializer)
 
 
 class ParkingLotViewSet(viewsets.ModelViewSet):
@@ -17,7 +19,7 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     Accepts url parameters to filter objects: address:str, car_capacity:int.
     """
     serializer_class = ParkingLotSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny,]
     http_method_names = ['get']
     queryset = ParkingLot.objects.all()
 
@@ -59,3 +61,20 @@ class FeaturesViewSet(ParkingLotViewSet):
         ко всему queryset."""
         serializer = FeatureCollectionSerializer(request.data)
         return Response(serializer.data)
+
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    '''Вьюсет для кастомной модели пользователя'''
+    permission_classes = [IsAuthenticated,]
+    queryset = CustomUser.objects.all()
+
+    def get_serializer_class(self):
+            if self.action == 'create':
+                return CustomUserCreateSerializer
+            return CustomUserSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(id=self.request.user.id)

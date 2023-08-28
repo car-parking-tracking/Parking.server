@@ -1,10 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from .models import CustomUser
 
 
-@admin.register(User)
+@admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
     """
     Кастомизированная админка.
@@ -29,7 +27,7 @@ class CustomUserAdmin(admin.ModelAdmin):
         (
             None,
             {
-                'fields': ['email', 'first_name', 'last_name', 'date_joined']
+                'fields': ['email', 'first_name', 'last_name', 'date_joined', 'favorites']
             }
         ),
         (
