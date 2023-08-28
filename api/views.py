@@ -65,5 +65,7 @@ class FeaturesViewSet(ParkingLotViewSet):
         """Переопределил метод, чтобы сериализатор не применялся
         несколько раз (к каждому объекту queryset), а только единожды
         ко всему queryset."""
-        serializer = FeatureCollectionSerializer(request.data)
+        serializer = FeatureCollectionSerializer(
+            request.data, context={'request': request}
+        )
         return Response(serializer.data)
