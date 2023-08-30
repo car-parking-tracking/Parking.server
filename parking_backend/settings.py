@@ -2,11 +2,9 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from corsheaders.defaults import default_headers
 
 
 load_dotenv()
-
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -37,6 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
+
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
@@ -61,6 +60,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'corsheaders',
+    'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
@@ -70,7 +70,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -82,6 +81,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
 }
 
 ROOT_URLCONF = 'parking_backend.urls'
@@ -89,7 +90,7 @@ ROOT_URLCONF = 'parking_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,9 +135,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -145,8 +146,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'static'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -168,3 +169,8 @@ SWAGGER_SETTINGS = {
       }
    }
 }
+
+SITE_NAME = os.getenv(
+    'SITE_NAME',
+    default='http://parkonaft.acceleratorpracticum.ru'
+)

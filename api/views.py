@@ -1,7 +1,7 @@
 from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import filters, viewsets
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
@@ -23,8 +23,11 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     queryset = ParkingLot.objects.all()
 
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,
+                       filters.OrderingFilter)
     filterset_fields = ('address', 'car_capacity')
+    search_fields = ('^id',)
+    ordering = ('id',)
 
     @action(
         detail=True,
