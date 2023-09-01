@@ -20,7 +20,7 @@ while True:
     with open('previous_results', 'r', encoding='utf-8') as file:
         previous_content = file.read()
 
-    if element.text.strip() == previous_content:
+    if element.text.strip() == previous_content.strip():
         print('Данные не обновлялись, повторю запрос через 24 часа')
         time.sleep(86400)
     else:
