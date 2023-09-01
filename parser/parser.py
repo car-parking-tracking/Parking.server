@@ -43,8 +43,32 @@ while True:
                 with zip_ref.open(first_file) as source_file, open('raw_data.json', 'wb') as target_file:
                     target_file.write(source_file.read())
             process()
+
+            # Команды для удаленного запуска
+            command_to_run = 'python manage.py add_data_moscow'
+
+            url = 'http://docker_host:2375/containers/backend/exec'
+            data = {
+                'AttachStdin': False,
+                'AttachStdout': True,
+                'AttachStderr': True,
+                'Tty': False,
+                'Cmd': ['/bin/sh', '-c', command_to_run]
+            }
+
+            session = requests.Session()
+            response = session.post(url, json=data)
+
+            command_id = response.json()['Id']
+            url = f'http://docker_host:2375/exec/{command_id}/start'
+            data = {'Detach': False, 'Tty': False}
+            response = session.post(url, json=data)
+            output = response.content.decode('utf-8')
+            print(output)
+
             os.remove('raw_data.zip')
             os.remove('raw_data.json')
+            os.remove('moscow_parking.json')
             print('Повторный запрос через 24 часа')
             time.sleep(86400)
         else:
