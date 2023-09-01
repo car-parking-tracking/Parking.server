@@ -55,7 +55,7 @@ while True:
                 username=os.getenv('SSH_USERNAME'),
                 password=os.getenv('SSH_PASSWORD')
             )
-            stdin, stdout, stderr = ssh_connection.exec_command('ls -l')
+            stdin, stdout, stderr = ssh_connection.exec_command(command_to_run)
             output = stdout.read().decode('utf-8')
             print(output)
             ssh_connection.close()
