@@ -4,13 +4,12 @@ import re
 import zipfile
 
 import requests
+import paramiko
 from bs4 import BeautifulSoup
 
 from moscow_data_processing import process
 
-
 URL = 'https://data.mos.ru/opendata/7704786030-platnye-parkovki-na-ulichno-dorojnoy-seti/passport?versionNumber=9&releaseNumber=17'
-
 
 while True:
     request = requests.get(URL)
@@ -21,13 +20,13 @@ while True:
     with open('previous_results', 'r', encoding='utf-8') as file:
         previous_content = file.read()
 
-    if element.text.strip() == previous_content.strip():
+    if element.text.strip() == previous_content:
         print('Данные не обновлялись, повторю запрос через 24 часа')
         time.sleep(86400)
     else:
         url_to_excel = 'https:' + str(element.find('a').get('href'))
         digits = re.findall(r'\d+', url_to_excel)
-        digits = int(digits[0])-2
+        digits = int(digits[0]) - 2
         modified_url = re.sub(r'\d+', str(digits), url_to_excel)
 
         with open('previous_results', 'w', encoding='utf-8') as file:
@@ -45,26 +44,21 @@ while True:
             process()
 
             # Команды для удаленного запуска
-            command_to_run = 'python manage.py add_data_moscow'
+            command_to_run = 'sudo docker exec backend python manage.py add_data_moscow'
+            ssh_connection = paramiko.SSHClient()
 
-            url = 'http://docker_host:2375/containers/backend/exec'
-            data = {
-                'AttachStdin': False,
-                'AttachStdout': True,
-                'AttachStderr': True,
-                'Tty': False,
-                'Cmd': ['/bin/sh', '-c', command_to_run]
-            }
+            ssh_connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-            session = requests.Session()
-            response = session.post(url, json=data)
-
-            command_id = response.json()['Id']
-            url = f'http://docker_host:2375/exec/{command_id}/start'
-            data = {'Detach': False, 'Tty': False}
-            response = session.post(url, json=data)
-            output = response.content.decode('utf-8')
+            ssh_connection.connect(
+                hostname=os.getenv('SSH_HOSTNAME'),
+                port=22,
+                username=os.getenv('SSH_USERNAME'),
+                password=os.getenv('SSH_PASSWORD')
+            )
+            stdin, stdout, stderr = ssh_connection.exec_command('ls -l')
+            output = stdout.read().decode('utf-8')
             print(output)
+            ssh_connection.close()
 
             os.remove('raw_data.zip')
             os.remove('raw_data.json')
