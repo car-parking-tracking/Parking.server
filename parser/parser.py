@@ -24,10 +24,10 @@ while True:
         print('Данные не обновлялись, повторю запрос через 24 часа')
         time.sleep(86400)
     else:
-        url_to_excel = 'https:' + str(element.find('a').get('href'))
-        digits = re.findall(r'\d+', url_to_excel)
+        url_to_file = 'https:' + str(element.find('a').get('href'))
+        digits = re.findall(r'\d+', url_to_file)
         digits = int(digits[0]) - 2
-        modified_url = re.sub(r'\d+', str(digits), url_to_excel)
+        modified_url = re.sub(r'\d+', str(digits), url_to_file)
 
         with open('previous_results', 'w', encoding='utf-8') as file:
             file.write(element.text)
