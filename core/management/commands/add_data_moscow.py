@@ -30,10 +30,10 @@ class Command(BaseCommand):
         with open(json_file, 'r', encoding='utf-8') as file:
             json_data = json.load(file)
             for parking_lot in json_data:
-                ParkingLot.objects.create(
+                ParkingLot.objects.update_or_create(
                     address=parking_lot['Address'],
                     latitude=float(parking_lot['coordinates'][1]),
                     longitude=float(parking_lot['coordinates'][0]),
                     car_capacity=parking_lot['CarCapacity'],
-                    tariffs=parking_lot['Tariffs']
+                    tariffs=parking_lot['tariffs']
                 )
