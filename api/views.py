@@ -55,10 +55,17 @@ class FeaturesViewSet(ParkingLotViewSet):
     for drawing points on map."""
     serializer_class = FeatureCollectionSerializer
     http_method_names = ['get']
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,
+                       filters.OrderingFilter)
+    filterset_fields = ('address', 'car_capacity')
+    search_fields = ('^id',)
+    ordering = ('id',)
 
     def list(self, request, *args, **kwargs):
         """Переопределил метод, чтобы сериализатор не применялся
         несколько раз (к каждому объекту queryset), а только единожды
         ко всему queryset."""
-        serializer = FeatureCollectionSerializer(request.data)
+        serializer = FeatureCollectionSerializer(
+            request.data, context={'request': request}
+        )
         return Response(serializer.data)

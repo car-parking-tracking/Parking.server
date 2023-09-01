@@ -84,6 +84,11 @@ class FeatureCollectionSerializer(serializers.Serializer):
     features = serializers.SerializerMethodField()
 
     def get_features(self, obj):
+        id = self.context['request'].query_params.get('search')
+        if id:
+            return FeatureSerializer(
+                ParkingLot.objects.filter(id__startswith=id).all(), many=True
+            ).data
         return FeatureSerializer(
             ParkingLot.objects.all(), many=True
         ).data

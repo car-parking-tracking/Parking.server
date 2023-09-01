@@ -34,7 +34,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
-
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
