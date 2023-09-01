@@ -26,7 +26,7 @@ class Command(BaseCommand):
     help = 'Наполнение базы данных информацией о платных московских парковках'
 
     def handle(self, *args, **options):
-        json_file = 'core/data/moscow_parking.json'
+        json_file = 'parser/moscow_parking.json'
         with open(json_file, 'r', encoding='utf-8') as file:
             json_data = json.load(file)
             for parking_lot in json_data:
