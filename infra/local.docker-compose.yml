@@ -47,7 +47,7 @@ services:
       - db
       - frontend
     env_file:
-      - /.env
+      - ./.env
 
   parser:
     build:
