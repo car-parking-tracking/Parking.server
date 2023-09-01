@@ -56,6 +56,9 @@ services:
 #      - db
 #    volumes:
 #      - shared_data:/parser
+#    env_file:
+#      - ./.env
+
 
 volumes:
   static_volume:
