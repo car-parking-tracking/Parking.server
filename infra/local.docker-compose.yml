@@ -26,6 +26,7 @@ services:
       - db
 
   frontend:
+    platform: linux/amd64
     image: parkonaft/client:latest
     restart: always
     ports:

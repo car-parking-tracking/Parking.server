@@ -2,13 +2,39 @@ from django.contrib.auth import authenticate, get_user_model
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings as djoser_settings
-from djoser.serializers import TokenCreateSerializer
+from djoser.serializers import TokenCreateSerializer, UserCreateSerializer
 from rest_framework import serializers
 
 from parking_lots.models import ParkingLot
 
 User = get_user_model()
 
+
+class CustomUserCreateSerializer(UserCreateSerializer):
+    '''Сериализатор для регистрации пользователей'''
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+        )
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    '''Сериализатор пользователя'''
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'favorites',
+        ) 
+ 
 
 class ParkingLotSerializer(serializers.ModelSerializer):
     is_favorited = serializers.SerializerMethodField()

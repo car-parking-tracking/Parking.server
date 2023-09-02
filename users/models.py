@@ -12,25 +12,30 @@ class CustomUser(AbstractUser):
     """
     username = None
     email = models.EmailField(
-        verbose_name=_('адрес электронной почты'),
+        verbose_name=_('Адрес электронной почты'),
         unique=True
     )
     first_name = models.CharField(
-        blank=True, max_length=150, verbose_name=_('имя')
+        blank=False,
+        max_length=150,
+        verbose_name=_('Имя')
     )
     last_name = models.CharField(
-        blank=True, max_length=150, verbose_name=_('фамилия')
+        blank=False,
+        max_length=150,
+        verbose_name=_('Фамилия')
     )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(
         auto_now_add=True,
-        verbose_name=_('дата регистрации')
+        verbose_name=_('Дата регистрации')
     )
     favorites = models.ManyToManyField(
         ParkingLot,
+        blank=True,
         related_name='favorites',
-        verbose_name=_('избранное'),
+        verbose_name=_('Избранное'),
     )
 
     USERNAME_FIELD = 'email'

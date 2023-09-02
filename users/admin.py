@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
 
 User = get_user_model()
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     """
     Кастомизированная админка.
-    Позволяет создать нового пользователя.
     """
     list_display = (
         'email',
