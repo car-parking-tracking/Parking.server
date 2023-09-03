@@ -20,6 +20,7 @@ services:
       - "8000:8000"
     volumes:
       - static_volume:/backend/static/
+      - shared_data:/backend/parser
     env_file:
       - ./.env
     depends_on:
@@ -49,6 +50,19 @@ services:
     env_file:
       - ./.env
 
+  parser:
+    build:
+      context: ../parser
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+      - db
+    volumes:
+      - shared_data:/parser
+    env_file:
+      - ./.env
+
 volumes:
   static_volume:
   pg_data_volume:
+  shared_data:
