@@ -5,6 +5,7 @@ from rest_framework import filters, viewsets
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
 
 from parking_lots.models import ParkingLot
 from users.models import CustomUser
@@ -17,6 +18,8 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
     """
     List, retrieve and create parking lots.
     Accepts url parameters to filter objects: address:str, car_capacity:int.
+    Supports searching by id, finds objects with ids that contain num passed
+    in search url parameter.
     """
     serializer_class = ParkingLotSerializer
     permission_classes = [AllowAny]
@@ -53,8 +56,12 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
 
 
 class FeaturesViewSet(ParkingLotViewSet):
-    """List, retrieve parking lots with json needed
-    for drawing points on map."""
+    """
+    List, retrieve parking lots with json needed
+    for drawing points on map. Supports searching by id,
+    finds objects with ids that contain num passed
+    in search url parameter.
+    """
     serializer_class = FeatureCollectionSerializer
     http_method_names = ['get']
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,
@@ -64,9 +71,6 @@ class FeaturesViewSet(ParkingLotViewSet):
     ordering = ('id',)
 
     def list(self, request, *args, **kwargs):
-        """Переопределил метод, чтобы сериализатор не применялся
-        несколько раз (к каждому объекту queryset), а только единожды
-        ко всему queryset."""
         serializer = FeatureCollectionSerializer(
             request.data, context={'request': request}
         )
@@ -74,7 +78,10 @@ class FeaturesViewSet(ParkingLotViewSet):
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    '''Вьюсет для кастомной модели пользователя'''
+    """
+    List, retrieve, create, delete, activate users.
+    me/ for showing current user (by passed auth token).
+    """
     permission_classes = [AllowAny]
     queryset = CustomUser.objects.all()
 
