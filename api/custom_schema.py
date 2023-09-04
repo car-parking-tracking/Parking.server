@@ -14,8 +14,14 @@ class ErrorResponseAutoSchema(SwaggerAutoSchema):
             properties={
                 'errors': openapi.Schema(
                     type=openapi.TYPE_OBJECT, properties={
-                        'detail': openapi.Schema(type=openapi.TYPE_STRING, description='Error details'),
-                        'code': openapi.Schema(type=openapi.TYPE_STRING, description='Error code'),
+                        'detail': openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            description='Error details'
+                        ),
+                        'code': openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            description='Error code'
+                        ),
                     }
                 )
             },
@@ -29,15 +35,25 @@ class ErrorResponseAutoSchema(SwaggerAutoSchema):
             properties={
                 'errors': openapi.Schema(
                     type=openapi.TYPE_OBJECT,
-                    description='error messages for each field that triggered a validation error',
+                    description=(
+                        'error messages for each field '
+                        'that triggered a validation error'
+                    ),
                     additional_properties=openapi.Schema(
                         description='A list of error messages for the field',
-                        type=openapi.TYPE_ARRAY, items=openapi.Schema(type=openapi.TYPE_STRING)
+                        type=openapi.TYPE_ARRAY, items=openapi.Schema(
+                            type=openapi.TYPE_STRING
+                        )
                     )
                 ),
                 api_settings.NON_FIELD_ERRORS_KEY: openapi.Schema(
-                    description='List of validation errors not related to any field',
-                    type=openapi.TYPE_ARRAY, items=openapi.Schema(type=openapi.TYPE_STRING)
+                    description=(
+                        'List of validation errors'
+                        ' not related to any field'
+                    ),
+                    type=openapi.TYPE_ARRAY, items=openapi.Schema(
+                        type=openapi.TYPE_STRING
+                    )
                 ),
             }
         )
@@ -77,7 +93,10 @@ class ErrorResponseAutoSchema(SwaggerAutoSchema):
             responses.setdefault(
                 status.HTTP_403_FORBIDDEN,
                 openapi.Response(
-                    description="Authentication credentials were invalid, absent or insufficient.",
+                    description=(
+                        "Authentication credentials were "
+                        "invalid, absent or insufficient."
+                    ),
                     schema=openapi.SchemaRef(definitions, 'GenericError')
                 )
             )
@@ -94,7 +113,10 @@ class ErrorResponseAutoSchema(SwaggerAutoSchema):
             responses.setdefault(
                 exceptions.NotFound.status_code,
                 openapi.Response(
-                    description="Object does not exist or caller has insufficient permissions to access it.",
+                    description=(
+                        "Object does not exist or caller has"
+                        " insufficient permissions to access it."
+                    ),
                     schema=openapi.SchemaRef(definitions, 'APIException')
                 )
             )
