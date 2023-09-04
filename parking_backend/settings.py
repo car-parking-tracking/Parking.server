@@ -165,7 +165,8 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization',
             'in': 'header'
       }
-   }
+   },
+   'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
 }
 
 SITE_NAME = os.getenv(
