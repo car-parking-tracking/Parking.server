@@ -33,8 +33,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'last_name',
             'email',
             'favorites',
-        ) 
- 
+        )
+
 
 class ParkingLotSerializer(serializers.ModelSerializer):
     is_favorited = serializers.SerializerMethodField()

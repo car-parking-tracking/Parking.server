@@ -12,16 +12,18 @@ urlpatterns = [
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Parkonaft API",
-      default_version='v1',
-      description="Документация OpenAPI для приложения Parkonaft",
-      # terms_of_service="URL страницы с пользовательским соглашением",
-      contact=openapi.Contact(email="parkonaft@gmail.com"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="Parkonaft API",
+        default_version='v1',
+        description="Документация OpenAPI для приложения Parkonaft",
+        # terms_of_service="URL страницы с пользовательским соглашением",
+        contact=openapi.Contact(email="parkonaft@gmail.com"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
+
+get_schema_view()
 
 urlpatterns += [
     re_path(
