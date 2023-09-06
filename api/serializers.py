@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings as djoser_settings
 from djoser.serializers import TokenCreateSerializer, UserCreateSerializer
 from rest_framework import serializers
+from drf_yasg.utils import swagger_serializer_method
 
 from parking_lots.models import ParkingLot
 
@@ -11,7 +12,7 @@ User = get_user_model()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
-    '''Сериализатор для регистрации пользователей'''
+    """Сериализатор для регистрации пользователей"""
     class Meta:
         model = User
         fields = (
@@ -24,7 +25,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    '''Сериализатор пользователя'''
+    """Сериализатор пользователя"""
     class Meta:
         model = User
         fields = (
@@ -109,6 +110,9 @@ class FeatureCollectionSerializer(serializers.Serializer):
     type = serializers.CharField(default='FeatureCollection')
     features = serializers.SerializerMethodField()
 
+    @swagger_serializer_method(
+        serializer_or_field=FeatureSerializer(many=True)
+    )
     def get_features(self, obj):
         id = self.context['request'].query_params.get('search')
         if id:

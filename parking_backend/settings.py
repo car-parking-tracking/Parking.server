@@ -42,6 +42,9 @@ DJOSER = {
     "ACTIVATION_URL": "api/v1/users/activation/{uid}/{token}/",
     'SERIALIZERS': {
         'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        'user': 'api.serializers.CustomUserSerializer',
+        'current_user': 'api.serializers.CustomUserSerializer',
+        'create_user': 'api.serializers.CustomUserCreateSerializer'
     },
 }
 
@@ -167,6 +170,7 @@ SWAGGER_SETTINGS = {
       }
    },
    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
+   'DEFAULT_MODEL_RENDERING': 'example',
 }
 
 SITE_NAME = os.getenv(
