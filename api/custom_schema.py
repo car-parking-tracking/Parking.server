@@ -13,16 +13,17 @@ class ErrorResponseAutoSchema(SwaggerAutoSchema):
             type=openapi.TYPE_OBJECT,
             properties={
                 'errors': openapi.Schema(
-                    type=openapi.TYPE_OBJECT, properties={
+                    type=openapi.TYPE_OBJECT,
+                    properties={
                         'detail': openapi.Schema(
                             type=openapi.TYPE_STRING,
                             description='Error details'
                         ),
                         'code': openapi.Schema(
                             type=openapi.TYPE_STRING,
-                            description='Error code'
+                            description='Error code',
                         ),
-                    }
+                    },
                 )
             },
             required=['detail']

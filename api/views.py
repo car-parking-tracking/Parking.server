@@ -1,17 +1,27 @@
 from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
 from rest_framework import filters, viewsets
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
 from parking_lots.models import ParkingLot
 from users.models import CustomUser
+from .example_responses import (LIST_FEATURES_EXAMPLE_RESPONSES,
+                                LIST_PARKINGLOTS_EXAMPLE_RESPONSES)
 
 from .serializers import (ParkingLotSerializer, FeatureCollectionSerializer,
                           CustomUserSerializer, CustomUserCreateSerializer)
 
 
+@method_decorator(
+    decorator=swagger_auto_schema(
+        responses=LIST_PARKINGLOTS_EXAMPLE_RESPONSES
+    ),
+    name='list'
+)
 class ParkingLotViewSet(viewsets.ModelViewSet):
     """
     List, retrieve and create parking lots.
@@ -53,6 +63,12 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
         )
 
 
+@method_decorator(
+    decorator=swagger_auto_schema(
+        responses=LIST_FEATURES_EXAMPLE_RESPONSES
+    ),
+    name='list'
+)
 class FeaturesViewSet(ParkingLotViewSet):
     """
     List, retrieve parking lots with json needed
@@ -73,6 +89,10 @@ class FeaturesViewSet(ParkingLotViewSet):
             request.data, context={'request': request}
         )
         return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        """Retrieving is disabled and will be later removed from urls."""
+        return Response({'error': 'retrieving is not allowed'})
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
