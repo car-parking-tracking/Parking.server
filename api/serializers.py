@@ -11,32 +11,6 @@ from parking_lots.models import ParkingLot
 User = get_user_model()
 
 
-class CustomUserCreateSerializer(UserCreateSerializer):
-    """Сериализатор для регистрации пользователей"""
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-        )
-
-
-class CustomUserSerializer(serializers.ModelSerializer):
-    """Сериализатор пользователя"""
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'favorites',
-        )
-
-
 class ParkingLotSerializer(serializers.ModelSerializer):
     is_favorited = serializers.SerializerMethodField()
 
@@ -57,6 +31,34 @@ class ParkingLotSerializer(serializers.ModelSerializer):
         if request.user.is_anonymous:
             return False
         return obj.favorites.filter(user=request.user).exists()
+
+
+class CustomUserCreateSerializer(UserCreateSerializer):
+    """Сериализатор для регистрации пользователей"""
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+        )
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    """Сериализатор пользователя"""
+    favorites = ParkingLotSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'favorites',
+        )
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
