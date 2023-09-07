@@ -15,7 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -35,11 +36,13 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
+BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
+
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "api/v1/users/activation/{uid}/{token}/",
+    "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
     'SERIALIZERS': {
         'token_create': 'api.serializers.CustomTokenCreateSerializer',
         'user': 'api.serializers.CustomUserSerializer',
