@@ -1,15 +1,19 @@
+from unittest import skip
+
 from django.core import mail
 from rest_framework import status
 from rest_framework.test import APITestCase
-from unittest import skip
+
+from parking_backend import settings
 
 
 @skip
 class EmailVerificationTest(APITestCase):
-    register_url = "/api/v1/users/"
-    activate_url = "/api/v1/users/activation/"
+    base_url = settings.BASE_URL
+    register_url = base_url
+    activate_url = f"{base_url}activation/"
     login_url = "/api/v1/auth/token/login/"
-    user_details_url = "/api/v1/users/"
+    user_details_url = base_url
 
     user_data = {
         "email": "test@example.com",
