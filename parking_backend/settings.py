@@ -3,12 +3,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +23,7 @@ ALLOWED_HOSTS = [
     str(os.getenv('HOST_ADDRESS')),
     str(os.getenv('HOST_ADDRESS')),
     'parkonaft.acceleratorpracticum.ru',
+    'https://parkonaft.acceleratorpracticum.ru'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -61,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -79,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -119,7 +120,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT')
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -165,8 +165,8 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-      'Bearer': {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
@@ -180,3 +180,22 @@ SITE_NAME = os.getenv(
     'SITE_NAME',
     default='https://parkonaft.acceleratorpracticum.ru'
 )
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+    'Content-Type',
+]
+
+CORS_ALLOW_CREDENTIALS = True
