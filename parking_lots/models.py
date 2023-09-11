@@ -11,6 +11,7 @@ class ParkingLot(models.Model):
         verbose_name='Адрес парковки',
         max_length=150,
         blank=False,
+        unique=True,
     )
     latitude = models.FloatField(
         verbose_name='Широта',
