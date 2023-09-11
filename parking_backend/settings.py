@@ -171,5 +171,5 @@ SWAGGER_SETTINGS = {
 
 SITE_NAME = os.getenv(
     'SITE_NAME',
-    default='http://parkonaft.acceleratorpracticum.ru'
+    default='https://parkonaft.acceleratorpracticum.ru'
 )
