@@ -4,36 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings as djoser_settings
 from djoser.serializers import TokenCreateSerializer, UserCreateSerializer
 from rest_framework import serializers
+from drf_yasg.utils import swagger_serializer_method
 
 from parking_lots.models import ParkingLot
 
 User = get_user_model()
-
-
-class CustomUserCreateSerializer(UserCreateSerializer):
-    '''Сериализатор для регистрации пользователей'''
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-        )
-
-
-class CustomUserSerializer(serializers.ModelSerializer):
-    '''Сериализатор пользователя'''
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'favorites',
-        )
 
 
 class ParkingLotSerializer(serializers.ModelSerializer):
@@ -56,6 +31,34 @@ class ParkingLotSerializer(serializers.ModelSerializer):
         if request.user.is_anonymous:
             return False
         return obj.favorites.filter(user=request.user).exists()
+
+
+class CustomUserCreateSerializer(UserCreateSerializer):
+    """Сериализатор для регистрации пользователей"""
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+        )
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    """Сериализатор пользователя"""
+    favorites = ParkingLotSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'favorites',
+        )
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
@@ -109,6 +112,9 @@ class FeatureCollectionSerializer(serializers.Serializer):
     type = serializers.CharField(default='FeatureCollection')
     features = serializers.SerializerMethodField()
 
+    @swagger_serializer_method(
+        serializer_or_field=FeatureSerializer(many=True)
+    )
     def get_features(self, obj):
         id = self.context['request'].query_params.get('search')
         if id:
