@@ -4,17 +4,18 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from djoser.views import UserViewSet
 from djoser.serializers import ActivationSerializer
-from rest_framework import filters, viewsets, status
+from rest_framework import filters, generics, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
-from parking_lots.models import ParkingLot
+from parking_lots.models import ParkingLot, CompanyInfo
 from users.models import CustomUser
 from .example_responses import (LIST_FEATURES_EXAMPLE_RESPONSES,
                                 LIST_PARKINGLOTS_EXAMPLE_RESPONSES)
 
 from .serializers import (ParkingLotSerializer, FeatureCollectionSerializer,
-                          CustomUserSerializer, CustomUserCreateSerializer)
+                          CustomUserSerializer, CustomUserCreateSerializer,
+                          CompanyInfoSerializer)
 
 
 @method_decorator(
@@ -110,3 +111,13 @@ class CustomUserViewSet(UserViewSet):
         if self.action == 'activation':  # Это костыль, надо переписать метод или убрать его в принципе
             return ActivationSerializer
         return CustomUserSerializer
+
+
+class CompanyInfoView(generics.RetrieveAPIView):
+    """
+    Retrieve company info.
+    """
+    serializer_class = CompanyInfoSerializer
+
+    def get_object(self):
+        return CompanyInfo.objects.all()[0]
