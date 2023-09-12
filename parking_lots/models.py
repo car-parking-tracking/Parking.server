@@ -54,7 +54,7 @@ class CompanyInfo(SingletonModel):
     """
     logo = models.ImageField(
         verbose_name='Лого',
-        upload_to='parking_lots/logos/'
+        upload_to='company_info/logos/'
     )
     email = models.CharField(
         verbose_name='Адрес электронной почты',
