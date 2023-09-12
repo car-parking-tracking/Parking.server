@@ -7,7 +7,6 @@ from rest_framework import serializers
 from drf_yasg.utils import swagger_serializer_method
 
 from parking_lots.models import ParkingLot
-from users.models import CustomUser
 
 User = get_user_model()
 
@@ -45,17 +44,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'email',
             'password',
         )
-
-    def create(self, validated_data):
-        """ Создание нового пользователя. """
-        user = CustomUser(
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
