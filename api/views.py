@@ -3,9 +3,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from djoser.views import UserViewSet
+from djoser.serializers import ActivationSerializer
 from rest_framework import filters, viewsets, status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from parking_lots.models import ParkingLot
@@ -107,18 +107,6 @@ class CustomUserViewSet(UserViewSet):
     def get_serializer_class(self):
         if self.action == 'create':
             return CustomUserCreateSerializer
+        if self.action == 'activation':  # Это костыль, надо переписать метод или убрать его в принципе
+            return ActivationSerializer
         return CustomUserSerializer
-
-    def get_object(self):
-        """ Для GET запроса по id пользователя."""
-        return get_object_or_404(CustomUser,
-                                 id=self.kwargs.get('id'))
-
-    @action(detail=False,
-            methods=('GET',),
-            permission_classes=(IsAuthenticated,))
-    # Для работы с эндопоинтом /me/
-    def me(self, request):
-        user_info = get_object_or_404(CustomUser, id=request.user.id)
-        serializer = self.get_serializer(user_info)
-        return Response(serializer.data, status=status.HTTP_200_OK)
