@@ -2,9 +2,10 @@ from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from rest_framework import filters, viewsets
+from djoser.views import UserViewSet
+from rest_framework import filters, viewsets, status
 from rest_framework.decorators import action
-from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from parking_lots.models import ParkingLot
@@ -95,7 +96,7 @@ class FeaturesViewSet(ParkingLotViewSet):
         return Response({'error': 'retrieving is not allowed'})
 
 
-class CustomUserViewSet(viewsets.ModelViewSet):
+class CustomUserViewSet(UserViewSet):
     """
     List, retrieve, create, delete, activate users.
     me/ for showing current user (by passed auth token).
@@ -108,8 +109,16 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return CustomUserCreateSerializer
         return CustomUserSerializer
 
-    def perform_create(self, serializer):
-        serializer.save()
+    def get_object(self):
+        """ Для GET запроса по id пользователя."""
+        return get_object_or_404(CustomUser,
+                                 id=self.kwargs.get('id'))
 
-    def get_queryset(self):
-        return CustomUser.objects.filter(id=self.request.user.id)
+    @action(detail=False,
+            methods=('GET',),
+            permission_classes=(IsAuthenticated,))
+    # Для работы с эндопоинтом /me/
+    def me(self, request):
+        user_info = get_object_or_404(CustomUser, id=request.user.id)
+        serializer = self.get_serializer(user_info)
+        return Response(serializer.data, status=status.HTTP_200_OK)

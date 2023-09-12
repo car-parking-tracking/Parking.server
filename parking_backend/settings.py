@@ -60,15 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
-    'corsheaders',
     'rest_framework',
+    'djoser',
     'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
-    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +78,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -180,22 +178,3 @@ SITE_NAME = os.getenv(
     'SITE_NAME',
     default='https://parkonaft.acceleratorpracticum.ru'
 )
-
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
-
-CORS_ALLOW_HEADERS = [
-    'Authorization',
-    'Content-Type',
-]
-
-CORS_ALLOW_CREDENTIALS = True
