@@ -43,10 +43,13 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
     'SERIALIZERS': {
-        'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        'token': 'djoser.serializers.TokenSerializer',
+        'token_create': 'djoser.serializers.TokenCreateSerializer',
         'user': 'api.serializers.CustomUserSerializer',
         'current_user': 'api.serializers.CustomUserSerializer',
-        'create_user': 'api.serializers.CustomUserCreateSerializer'
+        'create_user': 'api.serializers.CustomUserCreateSerializer',
+        'activation': 'djoser.serializers.ActivationSerializer',
     },
 }
 
@@ -168,10 +171,11 @@ SWAGGER_SETTINGS = {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
-      }
-   },
-   'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
-   'DEFAULT_MODEL_RENDERING': 'example',
+        }
+    },
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
+    'DEFAULT_MODEL_RENDERING': 'example',
+    'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
 }
 
 SITE_NAME = os.getenv(
