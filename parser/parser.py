@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from moscow_data_processing import process
 
 URL = 'https://data.mos.ru/opendata/7704786030-platnye-parkovki-na-ulichno-dorojnoy-seti/passport?versionNumber=9&releaseNumber=17'
-
+WAIT_TIME = 86400
 
 if __name__ == '__main__':
     while True:
@@ -55,17 +55,20 @@ if __name__ == '__main__':
                     hostname=os.getenv('SSH_HOSTNAME'),
                     port=22,
                     username=os.getenv('SSH_USERNAME'),
-                    password=os.getenv('SSH_PASSWORD')
+                    password=os.getenv('SSH_PASSWORD'),
                 )
                 stdin, stdout, stderr = ssh_connection.exec_command(command_to_run)
                 output = stdout.read().decode('utf-8')
                 print(output)
                 ssh_connection.close()
 
-                os.remove('raw_data.zip')
-                os.remove('raw_data.json')
-                os.remove('moscow_parking.json')
-                print('Повторный запрос через 24 часа')
-                time.sleep(86400)
+                if output is not None:
+                    os.remove('raw_data.zip')
+                    os.remove('raw_data.json')
+                    os.remove('moscow_parking.json')
+                    print('Повторный запрос через 24 часа')
+                    time.sleep(WAIT_TIME)
+                else:
+                    print('Проблема при подключении по SSH')
             else:
                 print("Не удалось скачать файл. Код состояния:", download.status_code)

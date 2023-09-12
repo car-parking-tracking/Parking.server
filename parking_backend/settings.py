@@ -43,10 +43,13 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
     'SERIALIZERS': {
-        'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        'token': 'djoser.serializers.TokenSerializer',
+        'token_create': 'djoser.serializers.TokenCreateSerializer',
         'user': 'api.serializers.CustomUserSerializer',
         'current_user': 'api.serializers.CustomUserSerializer',
-        'create_user': 'api.serializers.CustomUserCreateSerializer'
+        'create_user': 'api.serializers.CustomUserCreateSerializer',
+        'activation': 'djoser.serializers.ActivationSerializer',
     },
 }
 
@@ -60,15 +63,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
-    'corsheaders',
     'rest_framework',
+    'djoser',
     'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
-    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -173,32 +174,14 @@ SWAGGER_SETTINGS = {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
-      }
-   },
-   'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
-   'DEFAULT_MODEL_RENDERING': 'example',
+        }
+    },
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
+    'DEFAULT_MODEL_RENDERING': 'example',
+    'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
 }
 
 SITE_NAME = os.getenv(
     'SITE_NAME',
     default='https://parkonaft.acceleratorpracticum.ru'
 )
-
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
-
-CORS_ALLOW_HEADERS = [
-    'Authorization',
-    'Content-Type',
-]
-
-CORS_ALLOW_CREDENTIALS = True

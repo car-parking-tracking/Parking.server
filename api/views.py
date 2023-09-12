@@ -2,9 +2,10 @@ from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from rest_framework import generics, filters, viewsets
+from djoser.views import UserViewSet
+from djoser.serializers import ActivationSerializer
+from rest_framework import filters, generics, viewsets, status
 from rest_framework.decorators import action
-from rest_framework import status
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from parking_lots.models import ParkingLot, CompanyInfo
@@ -96,7 +97,7 @@ class FeaturesViewSet(ParkingLotViewSet):
         return Response({'error': 'retrieving is not allowed'})
 
 
-class CustomUserViewSet(viewsets.ModelViewSet):
+class CustomUserViewSet(UserViewSet):
     """
     List, retrieve, create, delete, activate users.
     me/ for showing current user (by passed auth token).
@@ -107,13 +108,9 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'create':
             return CustomUserCreateSerializer
+        if self.action == 'activation':  # Это костыль, надо переписать метод или убрать его в принципе
+            return ActivationSerializer
         return CustomUserSerializer
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def get_queryset(self):
-        return CustomUser.objects.filter(id=self.request.user.id)
 
 
 class CompanyInfoView(generics.RetrieveAPIView):

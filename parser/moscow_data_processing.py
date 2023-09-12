@@ -6,11 +6,6 @@ def process():
     Скрипт для процессинга сырого json от сайта парковок
     и приведения его к подобающему виду.
     """
-    TIMESTAMPS = [
-        '08:00-21:00',
-        '21:00-23:59',
-        '00:00-08:00',
-    ]
 
     with open('raw_data.json', 'r', encoding='windows-1251') as file:
         json_context = file.read()

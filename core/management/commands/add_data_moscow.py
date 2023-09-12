@@ -30,10 +30,21 @@ class Command(BaseCommand):
         with open(json_file, 'r', encoding='utf-8') as file:
             json_data = json.load(file)
             for parking_lot in json_data:
-                ParkingLot.objects.update_or_create(
-                    address=parking_lot['Address'],
-                    latitude=float(parking_lot['coordinates'][1]),
-                    longitude=float(parking_lot['coordinates'][0]),
-                    car_capacity=parking_lot['CarCapacity'],
-                    tariffs=parking_lot['tariffs']
+                address = parking_lot['Address']
+                defaults = {
+                    'latitude': float(parking_lot['coordinates'][1]),
+                    'longitude': float(parking_lot['coordinates'][0]),
+                    'car_capacity': parking_lot['CarCapacity'],
+                    'tariffs': parking_lot['tariffs']
+                }
+
+                existing_parking_lot, created = ParkingLot.objects.get_or_create(
+                    address=address,
+                    defaults=defaults
                 )
+
+                if not created:
+                    for field, value in defaults.items():
+                        setattr(existing_parking_lot, field, value)
+                    existing_parking_lot.save()
+        print('Данные обновлены')
