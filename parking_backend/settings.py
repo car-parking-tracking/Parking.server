@@ -61,20 +61,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
     'rest_framework',
-    'corsheaders', # CORS библиотека
+    'djoser',
     'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
-    'djoser',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # Для CORS библиотеки
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -180,26 +178,3 @@ SITE_NAME = os.getenv(
     'SITE_NAME',
     default='https://parkonaft.acceleratorpracticum.ru'
 )
-
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
-
-CORS_ALLOW_HEADERS = (
-    "accept",
-    "authorization",
-    "content-type",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-)
-
-CORS_ALLOW_CREDENTIALS = True
