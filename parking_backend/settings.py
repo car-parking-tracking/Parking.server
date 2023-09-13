@@ -3,19 +3,18 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 # Custom user model:
 AUTH_USER_MODEL = 'users.CustomUser'
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -24,6 +23,7 @@ ALLOWED_HOSTS = [
     str(os.getenv('HOST_ADDRESS')),
     str(os.getenv('HOST_ADDRESS')),
     'parkonaft.acceleratorpracticum.ru',
+    'https://parkonaft.acceleratorpracticum.ru'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -35,16 +35,21 @@ CSRF_TRUSTED_ORIGINS = [
     'https://parkonaft.acceleratorpracticum.ru',
 ]
 
+BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
+
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "api/v1/users/activation/{uid}/{token}/",
+    "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
     'SERIALIZERS': {
-        'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
+        'token': 'djoser.serializers.TokenSerializer',
+        'token_create': 'djoser.serializers.TokenCreateSerializer',
         'user': 'api.serializers.CustomUserSerializer',
         'current_user': 'api.serializers.CustomUserSerializer',
-        'create_user': 'api.serializers.CustomUserCreateSerializer'
+        'create_user': 'api.serializers.CustomUserCreateSerializer',
+        'activation': 'djoser.serializers.ActivationSerializer',
     },
 }
 
@@ -59,13 +64,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'parking_lots.apps.ParkingLotsConfig',
     'rest_framework',
+    'djoser',
     'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
     'core.apps.CoreConfig',
     'users',
     'api',
-    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +122,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -150,6 +154,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL SETTINGS
@@ -171,9 +178,10 @@ SWAGGER_SETTINGS = {
    },
    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
    'DEFAULT_MODEL_RENDERING': 'example',
+
 }
 
 SITE_NAME = os.getenv(
     'SITE_NAME',
-    default='http://parkonaft.acceleratorpracticum.ru'
+    default='https://parkonaft.acceleratorpracticum.ru'
 )

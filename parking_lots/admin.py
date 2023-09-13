@@ -2,7 +2,7 @@ import json
 
 from django.contrib import admin
 
-from .models import ParkingLot
+from .models import ParkingLot, CompanyInfo
 
 
 class ParkingLotAdmin(admin.ModelAdmin):
@@ -25,3 +25,4 @@ class ParkingLotAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ParkingLot, ParkingLotAdmin)
+admin.site.register(CompanyInfo)

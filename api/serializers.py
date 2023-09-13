@@ -4,11 +4,34 @@ from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings as djoser_settings
 from djoser.serializers import TokenCreateSerializer, UserCreateSerializer
 from rest_framework import serializers
+from drf_extra_fields.fields import Base64ImageField
 from drf_yasg.utils import swagger_serializer_method
 
-from parking_lots.models import ParkingLot
+from parking_lots.models import ParkingLot, CompanyInfo
 
 User = get_user_model()
+
+
+class ParkingLotSerializer(serializers.ModelSerializer):
+    is_favorited = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ParkingLot
+        fields = (
+            'id',
+            'is_favorited',
+            'address',
+            'longitude',
+            'latitude',
+            'car_capacity',
+            'tariffs',
+        )
+
+    def get_is_favorited(self, obj):
+        request = self.context.get('request')
+        if request.user.is_anonymous:
+            return False
+        return obj.favorites.filter(user=request.user).exists()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
@@ -26,6 +49,8 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """Сериализатор пользователя"""
+    favorites = ParkingLotSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         fields = (
@@ -35,28 +60,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'email',
             'favorites',
         )
-
-
-class ParkingLotSerializer(serializers.ModelSerializer):
-    is_favorited = serializers.SerializerMethodField()
-
-    class Meta:
-        model = ParkingLot
-        fields = [
-            'id',
-            'is_favorited',
-            'address',
-            'longitude',
-            'latitude',
-            'car_capacity',
-            'tariffs'
-        ]
-
-    def get_is_favorited(self, obj):
-        request = self.context.get('request')
-        if request.user.is_anonymous:
-            return False
-        return obj.favorites.filter(user=request.user).exists()
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
@@ -122,3 +125,16 @@ class FeatureCollectionSerializer(serializers.Serializer):
         return FeatureSerializer(
             ParkingLot.objects.all(), many=True
         ).data
+
+
+class CompanyInfoSerializer(serializers.ModelSerializer):
+
+    logo = Base64ImageField()
+
+    class Meta:
+        model = CompanyInfo
+        fields = (
+            'logo',
+            'email',
+            'about',
+            )

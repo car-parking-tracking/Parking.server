@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from .singleton import SingletonModel
+
 
 class ParkingLot(models.Model):
     """
@@ -11,6 +13,7 @@ class ParkingLot(models.Model):
         verbose_name='Адрес парковки',
         max_length=150,
         blank=False,
+        unique=True,
     )
     latitude = models.FloatField(
         verbose_name='Широта',
@@ -44,3 +47,27 @@ class ParkingLot(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class CompanyInfo(SingletonModel):
+    """
+    Модель страницы 'О продукте'.
+    """
+    logo = models.ImageField(
+        verbose_name='Лого',
+        upload_to='company_info/logos/'
+    )
+    email = models.CharField(
+        verbose_name='Адрес электронной почты',
+        max_length=100
+    )
+    about = models.TextField(
+        verbose_name='Описание'
+    )
+
+    class Meta:
+        verbose_name = 'О продукте'
+        verbose_name_plural = 'О продукте'
+
+    def __str__(self):
+        return 'О продукте'
