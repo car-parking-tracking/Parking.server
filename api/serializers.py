@@ -130,11 +130,13 @@ class FeatureCollectionSerializer(serializers.Serializer):
 class CompanyInfoSerializer(serializers.ModelSerializer):
 
     logo = Base64ImageField()
+    image = Base64ImageField()
 
     class Meta:
         model = CompanyInfo
         fields = (
             'logo',
+            'image',
             'email',
             'about',
             )

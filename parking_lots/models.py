@@ -64,6 +64,10 @@ class CompanyInfo(SingletonModel):
     about = models.TextField(
         verbose_name='Описание'
     )
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='company_info/images/'
+    )
 
     class Meta:
         verbose_name = 'О продукте'
