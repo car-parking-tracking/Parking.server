@@ -178,7 +178,7 @@ SWAGGER_SETTINGS = {
    },
    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
    'DEFAULT_MODEL_RENDERING': 'example',
-
+   'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
 }
 
 SITE_NAME = os.getenv(
