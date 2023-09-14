@@ -108,9 +108,7 @@ class CustomUserViewSet(UserViewSet):
     def get_serializer_class(self):
         if self.action == 'create':
             return CustomUserCreateSerializer
-        if self.action == 'activation':  # Это костыль, надо переписать метод или убрать его в принципе
-            return ActivationSerializer
-        return CustomUserSerializer
+        return super().get_serializer_class()
 
 
 class CompanyInfoView(generics.RetrieveAPIView):

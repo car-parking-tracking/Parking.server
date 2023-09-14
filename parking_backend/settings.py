@@ -41,6 +41,7 @@ BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
 DJOSER = {
     "LOGIN FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
+    "PASSWORD_RESET_CONFIRM_URL": f"{BASE_URL}reset_password/{{uid}}/{{token}}/",
     "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
     'SERIALIZERS': {
         # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
