@@ -169,16 +169,16 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
+   'SECURITY_DEFINITIONS': {
+        'api_key': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
         }
-    },
-    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
-    'DEFAULT_MODEL_RENDERING': 'example',
-    'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
+   },
+   'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
+   'DEFAULT_MODEL_RENDERING': 'example',
+   'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
 }
 
 SITE_NAME = os.getenv(
