@@ -41,4 +41,5 @@ jobs:
           script: |
             cd ../home/backend/infra/
             sudo docker compose down --rmi local
+            sudo docker pull parkonaft/server:latest
             sudo docker compose up --build -d
