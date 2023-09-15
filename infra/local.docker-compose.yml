@@ -52,17 +52,17 @@ services:
     env_file:
       - ./.env
 
-  parser:
-    build:
-      context: ../parser
-      dockerfile: Dockerfile
-    depends_on:
-      - backend
-      - db
-    volumes:
-      - shared_data:/parser
-    env_file:
-      - ./.env
+  # parser:
+  #  build:
+  #    context: ../parser
+  #    dockerfile: Dockerfile
+  #  depends_on:
+  #    - backend
+  #    - db
+  #  volumes:
+  #    - shared_data:/parser
+  #  env_file:
+  #    - ./.env
 
 volumes:
   static_volume:

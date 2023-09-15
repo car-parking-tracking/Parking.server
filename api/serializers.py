@@ -31,7 +31,7 @@ class ParkingLotSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request.user.is_anonymous:
             return False
-        return obj.favorites.filter(user=request.user).exists()
+        return request.user.favorites.filter(id=obj.id).exists()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
