@@ -115,6 +115,10 @@ class CustomUserViewSet(UserViewSet):
             return CustomUserCreateSerializer
         return super().get_serializer_class()
 
+    @action(["post"], detail=False)
+    def reset_password(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_204_NO_CONTENT)  # Убрать после релиза
+
 
 class CompanyInfoView(generics.RetrieveAPIView):
     """
