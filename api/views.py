@@ -3,7 +3,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from djoser.views import UserViewSet
-from djoser.serializers import ActivationSerializer
 from rest_framework import filters, generics, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -14,7 +13,7 @@ from .example_responses import (LIST_FEATURES_EXAMPLE_RESPONSES,
                                 LIST_PARKINGLOTS_EXAMPLE_RESPONSES)
 
 from .serializers import (ParkingLotSerializer, FeatureCollectionSerializer,
-                          CustomUserSerializer, CustomUserCreateSerializer,
+                          CustomUserCreateSerializer,
                           CompanyInfoSerializer)
 
 
@@ -52,6 +51,12 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
         """Adding parking lot to favorites."""
         parking_lot = get_object_or_404(ParkingLot, id=pk)
         user = request.user
+
+        if user.is_anonymous:
+            return Response(
+                {'error': 'Пользователь анонимный'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         if user.favorites.filter(id=parking_lot.id).exists():
             user.favorites.remove(parking_lot)
