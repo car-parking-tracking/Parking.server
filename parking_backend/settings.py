@@ -22,10 +22,10 @@ ALLOWED_HOSTS = [
     'backend',
     str(os.getenv('HOST_ADDRESS')),
     str(os.getenv('HOST_ADDRESS')),
-    # 'parkonaft.acceleratorpracticum.ru',
-    # 'https://parkonaft.acceleratorpracticum.ru',
-    'parkonaft.ru',
-    'https://parkonaft.ru'
+    'parkonaft.acceleratorpracticum.ru',
+    'https://parkonaft.acceleratorpracticum.ru',
+    # 'parkonaft.ru',
+    # 'https://parkonaft.ru'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -33,10 +33,10 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
     'http://' + str(os.getenv('HOST_ADDRESS')),
     'https://' + str(os.getenv('HOST_ADDRESS')),
-    # 'http://parkonaft.acceleratorpracticum.ru',
-    # 'https://parkonaft.acceleratorpracticum.ru',
-    'http://parkonaft.ru',
-    'https://parkonaft.ru'
+    'http://parkonaft.acceleratorpracticum.ru',
+    'https://parkonaft.acceleratorpracticum.ru',
+    # 'http://parkonaft.ru',
+    # 'https://parkonaft.ru'
 ]
 
 BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
@@ -184,12 +184,12 @@ SWAGGER_SETTINGS = {
    },
    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
    'DEFAULT_MODEL_RENDERING': 'example',
-   # 'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
-   'DEFAULT_API_URL': 'https://parkonaft.ru'
+   'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
+   #'DEFAULT_API_URL': 'https://parkonaft.ru'
 }
 
 SITE_NAME = os.getenv(
     'SITE_NAME',
-    # default='https://parkonaft.acceleratorpracticum.ru'
-    default='https://parkonaft.ru'
+    default='https://parkonaft.acceleratorpracticum.ru'
+    # default='https://parkonaft.ru'
 )
