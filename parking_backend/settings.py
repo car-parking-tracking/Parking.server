@@ -35,7 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://' + str(os.getenv('HOST_ADDRESS')),
     # 'http://parkonaft.acceleratorpracticum.ru',
     # 'https://parkonaft.acceleratorpracticum.ru',
-    'parkonaft.ru',
+    'http://parkonaft.ru',
     'https://parkonaft.ru'
 ]
 
