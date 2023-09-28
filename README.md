@@ -71,4 +71,4 @@ parking_server/                  <- project root
 `GET api/v1/feature_collection/{id}/` - Извлечение парковочного места с помощью необходимого json
 для рисования точек на карте.
 
-Подробная документация доступна по адресу `http://parkonaft.acceleratorpracticum.ru/swagger/`
+Подробная документация доступна по адресу `http://parkonaft.acceleratorpracticum.ru/swagger/`.
