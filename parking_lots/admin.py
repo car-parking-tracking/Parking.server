@@ -26,3 +26,6 @@ class ParkingLotAdmin(admin.ModelAdmin):
 
 admin.site.register(ParkingLot, ParkingLotAdmin)
 admin.site.register(CompanyInfo)
+
+admin.site.site_title = 'Администрирование Parkonaft'
+admin.site.site_header = 'Администрирование Parkonaft'

@@ -19,7 +19,6 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **fields)
         user.set_password(password)
-        user.is_active = True  # костыль, после релиза убрать
         user.save()
         return user
 

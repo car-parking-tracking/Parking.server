@@ -16,27 +16,21 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
+SITE_NAME = str(os.getenv("SITE_NAME"))
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'backend',
-    str(os.getenv('HOST_ADDRESS')),
-    str(os.getenv('HOST_ADDRESS')),
-    'parkonaft.acceleratorpracticum.ru',
-    'https://parkonaft.acceleratorpracticum.ru',
-    # 'parkonaft.ru',
-    # 'https://parkonaft.ru'
+    str(os.getenv('SITE_NAME')),
+    f'https://{SITE_NAME}',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
-    'http://' + str(os.getenv('HOST_ADDRESS')),
-    'https://' + str(os.getenv('HOST_ADDRESS')),
-    'http://parkonaft.acceleratorpracticum.ru',
-    'https://parkonaft.acceleratorpracticum.ru',
-    # 'http://parkonaft.ru',
-    # 'https://parkonaft.ru'
+    f'http://{SITE_NAME}',
+    f'https://{SITE_NAME}',
 ]
 
 BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
@@ -44,10 +38,11 @@ BASE_URL = os.getenv('BASE_URL', default='/api/v1/users/')
 # DJOSER SETTINGS
 DJOSER = {
     "LOGIN FIELD": "email",
-    "SEND_ACTIVATION_EMAIL": False,  # убрать после релиза
-    "SEND_CONFIRMATION_EMAIL": False,  # убрать после релиза
-    # "PASSWORD_RESET_CONFIRM_URL": f"{BASE_URL}reset_password/{{uid}}/{{token}}/",
-    "ACTIVATION_URL": f"{BASE_URL}activation/{{uid}}/{{token}}/",
+    "SEND_ACTIVATION_EMAIL": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "PASSWORD_RESET_CONFIRM_URL": "update/{uid}/{token}/",
+    "ACTIVATION_URL": "{uid}/{token}/",
     'SERIALIZERS': {
         # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
         'token': 'djoser.serializers.TokenSerializer',
@@ -171,7 +166,9 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS').lower() in ('true', '1', 't')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL').lower() in ('true', '1', 't')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 SWAGGER_SETTINGS = {
@@ -184,12 +181,5 @@ SWAGGER_SETTINGS = {
    },
    'DEFAULT_AUTO_SCHEMA_CLASS': 'api.custom_schema.ErrorResponseAutoSchema',
    'DEFAULT_MODEL_RENDERING': 'example',
-   'DEFAULT_API_URL': 'https://parkonaft.acceleratorpracticum.ru'
-   #'DEFAULT_API_URL': 'https://parkonaft.ru'
+   'DEFAULT_API_URL': f'https://{SITE_NAME}',
 }
-
-SITE_NAME = os.getenv(
-    'SITE_NAME',
-    default='https://parkonaft.acceleratorpracticum.ru'
-    # default='https://parkonaft.ru'
-)
