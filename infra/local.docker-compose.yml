@@ -12,6 +12,7 @@ services:
       - pg_data_volume:/var/lib/postgresql/data
 
   backend:
+    platform: linux/amd64
     build:
       context: ../.
       dockerfile: Dockerfile

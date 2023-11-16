@@ -36,6 +36,8 @@ class ParkingLotSerializer(serializers.ModelSerializer):
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     """Сериализатор для регистрации пользователей"""
+    email = serializers.EmailField()
+
     class Meta:
         model = User
         fields = (
@@ -50,6 +52,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     """Сериализатор пользователя"""
     favorites = ParkingLotSerializer(many=True, read_only=True)
+    email = serializers.EmailField()
 
     class Meta:
         model = User

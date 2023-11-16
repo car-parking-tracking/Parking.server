@@ -46,6 +46,9 @@ DJOSER = {
     'SERIALIZERS': {
         # 'token_create': 'api.serializers.CustomTokenCreateSerializer',
         'token': 'djoser.serializers.TokenSerializer',
+        'password_reset': 'djoser.serializers.SendEmailResetSerializer',
+        'password_reset_confirm': 'djoser.serializers.PasswordResetConfirmSerializer',
+        'password_reset_confirm_retype': 'djoser.serializers.PasswordResetConfirmRetypeSerializer',
         'token_create': 'djoser.serializers.TokenCreateSerializer',
         'user': 'api.serializers.CustomUserSerializer',
         'current_user': 'api.serializers.CustomUserSerializer',
@@ -167,7 +170,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS').lower() in ('true', '1', 't')
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL').lower() in ('true', '1', 't')
+# EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL').lower() in ('true', '1', 't')
 SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 

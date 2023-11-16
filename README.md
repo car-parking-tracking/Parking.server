@@ -41,6 +41,10 @@ parking_server/                  <- project root
 
 - Создать .env файл (за основу взять .env.example) в директории Parking.server/infra
 
+- Собрать и развернуть контейнеры локально:
+
+`docker-compose --file local.docker-compose.yml up -d --build`
+
 - Запустить сервер:
 
 `python manage.py runserver`
