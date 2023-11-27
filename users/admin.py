@@ -26,6 +26,7 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = (
         'date_joined',
     )
+    list_per_page = 10
     fieldsets = (
         (
             None,
