@@ -1,0 +1,684 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/v1/users/:
+    get:
+      operationId: listCustomUsers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/me/:
+    get:
+      operationId: meCustomUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: meCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: meCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: meCustomUser
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/users/{id}/:
+    get:
+      operationId: retrieveCustomUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateCustomUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateCustomUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyCustomUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/parking_lots/:
+    get:
+      operationId: listParkingLots
+      description: "\u0412\u044C\u044E\u0441\u0435\u0442 \u0434\u043B\u044F \u043E\
+        \u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0434\
+        \u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0440\u043A\
+        \u043E\u0432\u043E\u043A.\n\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\
+        \u0438\u044F \u043F\u0430\u0440\u043A\u043E\u0432\u043E\u043A \u043F\u043E\
+        \ url \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C address:str\
+        \ \u0438 car_capacity:int."
+      parameters:
+      - name: address
+        required: false
+        in: query
+        description: address
+        schema:
+          type: string
+      - name: car_capacity
+        required: false
+        in: query
+        description: car_capacity
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParkingLot'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createParkingLot
+      description: "\u0412\u044C\u044E\u0441\u0435\u0442 \u0434\u043B\u044F \u043E\
+        \u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0434\
+        \u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0440\u043A\
+        \u043E\u0432\u043E\u043A.\n\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\
+        \u0438\u044F \u043F\u0430\u0440\u043A\u043E\u0432\u043E\u043A \u043F\u043E\
+        \ url \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C address:str\
+        \ \u0438 car_capacity:int."
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParkingLot'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParkingLot'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParkingLot'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParkingLot'
+          description: ''
+      tags:
+      - api
+  /api/v1/parking_lots/{id}/:
+    get:
+      operationId: retrieveParkingLot
+      description: "\u0412\u044C\u044E\u0441\u0435\u0442 \u0434\u043B\u044F \u043E\
+        \u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0434\
+        \u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0440\u043A\
+        \u043E\u0432\u043E\u043A.\n\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\
+        \u0438\u044F \u043F\u0430\u0440\u043A\u043E\u0432\u043E\u043A \u043F\u043E\
+        \ url \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C address:str\
+        \ \u0438 car_capacity:int."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u0430\u0440\u043A\
+          \u043E\u0432\u043A\u0430."
+        schema:
+          type: string
+      - name: address
+        required: false
+        in: query
+        description: address
+        schema:
+          type: string
+      - name: car_capacity
+        required: false
+        in: query
+        description: car_capacity
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParkingLot'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/activation/:
+    post:
+      operationId: activationCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activation'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activation'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/resend_activation/:
+    post:
+      operationId: resendActivationCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/reset_password/:
+    post:
+      operationId: resetPasswordCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/reset_password_confirm/:
+    post:
+      operationId: resetPasswordConfirmCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/reset_email/:
+    post:
+      operationId: resetUsernameCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/reset_email_confirm/:
+    post:
+      operationId: resetUsernameConfirmCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameResetConfirm'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/set_password/:
+    post:
+      operationId: setPasswordCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPassword'
+          description: ''
+      tags:
+      - api
+  /api/v1/users/set_email/:
+    post:
+      operationId: setUsernameCustomUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUsername'
+          description: ''
+      tags:
+      - api
+  /api/v1/auth/token/login/:
+    post:
+      operationId: createCustomTokenCreate
+      description: Use this endpoint to obtain user authentication token.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTokenCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomTokenCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomTokenCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomTokenCreate'
+          description: ''
+      tags:
+      - api
+  /api/v1/auth/token/logout/:
+    post:
+      operationId: createTokenDestroy
+      description: Use this endpoint to logout user (remove user authentication token).
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+    ParkingLot:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        address:
+          type: string
+          maxLength: 150
+        coordinates:
+          type: string
+          maxLength: 40
+        car_capacity:
+          type: integer
+          minimum: 1
+        object_type:
+          type: string
+          maxLength: 20
+        tariffs:
+          type: string
+          maxLength: 2500
+      required:
+      - address
+      - coordinates
+      - car_capacity
+      - object_type
+      - tariffs
+    UserCreate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        id:
+          type: integer
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - email
+      - password
+    Activation:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - uid
+      - token
+    SendEmailReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    PasswordResetConfirm:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+        new_password:
+          type: string
+      required:
+      - uid
+      - token
+      - new_password
+    UsernameResetConfirm:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          maxLength: 254
+      required:
+      - new_email
+    SetPassword:
+      type: object
+      properties:
+        new_password:
+          type: string
+        current_password:
+          type: string
+      required:
+      - new_password
+      - current_password
+    SetUsername:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_email:
+          type: string
+          format: email
+          maxLength: 254
+      required:
+      - current_password
+      - new_email
+    CustomTokenCreate:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
